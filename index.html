@@ -49,7 +49,7 @@
 <section>
 	<h2>Benjamin Gonzalez</h2>
 	<ul>
-		<li class="fragment roll-in">Freelance Web Developer
+		<li class="fragment roll-in">Web Developer, business owner
 			<em class="aside">back-end and more recently front-end</em>
 		</li>
 		<li class="fragment roll-in">Involved in PHP since 2006
@@ -60,9 +60,9 @@
 			<a href="//meetups.com/Laravel-Montreal">Laravel Montréal</a>
 			<em class="aside">we meet every month, you are welcome :)</em>
 		</li>
-		<li class="fragment roll-in">@benjaminrosell at
-			<a href="//github.com/cviebrock"> Github</a> and
-			<a href="//twitter.com/cviebrock"> Twitter</a>
+		<li class="fragment roll-in">@BenjaminRosell at
+			<a href="//github.com/BenjaminRosell"> Github</a> and
+			<a href="//twitter.com/BenjaminRosell"> Twitter</a>
 			<span class="handwriting fragment">&hellip; also on <a href="//www.linkedin.com/pub/benjamin-gonzalez-rosell/1a/929/93"> LinkedIn</a></span>
 		</li>
 	</ul>
@@ -78,10 +78,34 @@
 		2011 (v1.0) &mdash; current (v4.2.05)
 	</p>
 	<p class="fragment">
+		Simple to use, expressive API
+	</p>
+	<p class="fragment">
 		Package-based dependency management
 	</p>
 	<p class="fragment">
 		<a href="//laravel.com"><i class="fa fa-fw fa-cloud-download"></i> laravel.com</a>
+	</p>
+</section>
+
+<section data-background="/img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
+	<blockquote>
+		« Any time that I have to do something that is a pain... it puts a seed in my head to work it into Laravel »
+	</blockquote>
+	<br>
+	<p>- Taylor Otwell</p>
+</section>
+
+<section data-background="/img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
+	<h1>Laravel is not</h1>
+	<p class="fragment">
+		a restrictive framework
+	</p>
+	<p class="fragment">
+		the absolute best framework
+	</p>
+	<p class="fragment">
+		always the best solution
 	</p>
 </section>
 
@@ -146,9 +170,9 @@ composer install
 
 <section data-background="#706da7" class="bg-inverse" data-transition="zoom">
 	<h2 class="no-border"><i class="fa fa-exclamation-triangle fa-lg fa-fw"></i> Git it under control</h2>
-	<div class="handwriting fragment" style="left: 10em; top: 4em;">
+	<!-- <div class="handwriting fragment" style="left: 10em; top: 4em;">
 		I see what you did.
-	</div>
+	</div> -->
 </section>
 
 
@@ -398,13 +422,13 @@ Route::resource('posts', 'PostsController');
 <code contenteditable data-trim class="php" data-filename="app/controllers/PostsController.php">
 class PostsController extends BaseController {
 
-	public function index() {}
-	public function create() {}
-	public function store() {}
-	public function show($id) {}
-	public function edit($id) {}
-	public function update($id) {}
-	public function destroy($id) {}
+	public function index() {}          // GET    /posts
+	public function create() {}         // GET    /posts/create
+	public function store() {}          // POST   /posts
+	public function show($id) {}        // GET    /posts/1
+	public function edit($id) {}        // GET    /posts/1/edit
+	public function update($id) {}      // PUT    /posts/1
+	public function destroy($id) {}     // DELETE /posts/1
 
 }
 </code>
