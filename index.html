@@ -5,7 +5,7 @@
 		<title>Laravel 101</title>
 
 		<meta name="description" content="An introduction to the Laravel framework, for the Winnipeg PHP Meetup group">
-		<meta name="author" content="Colin Viebrock">
+		<meta name="author" content="Benjamin Gonzalez">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -78,7 +78,13 @@
 		2011 (v1.0) &mdash; current (v4.2.05)
 	</p>
 	<p class="fragment">
-		Simple to use, expressive API
+		Simple to use, elegant, and expressive API
+	</p>
+	<p class="fragment">
+		Emphasis on testability
+	</p>
+	<p class="fragment">
+		Great documentation
 	</p>
 	<p class="fragment">
 		Package-based dependency management
@@ -98,6 +104,9 @@
 
 <section data-background="/img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
 	<h1>Laravel is not</h1>
+	<p class="fragment">
+		full of static methods...
+	</p>
 	<p class="fragment">
 		a restrictive framework
 	</p>
@@ -141,22 +150,6 @@
 	<pre>
 <code contenteditable data-trim class="bash">
 composer create-project laravel/laravel my-project --prefer-dist
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="bash">
-git clone git@github.com:laravel/laravel.git my-project
-cd my-project
-composer install
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="bash">
-curl -L -O https://github.com/laravel/laravel/archive/master.zip
-unzip master.zip
-mv laravel-master my-project
-cd my-project
-composer install
 </code>
 	</pre>
 	<div class="fragment wat skewed stamp-in" >
@@ -259,6 +252,27 @@ php artisan serve --port 8000
 
 </section>
 
+<section class="full-height" data-background="/img/homestead.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Homestead</h2>
+</section>
+
+<section>
+	<h2>Software installed</h2>
+	<ul>
+		<li class="fragment roll-in">Ubuntu 14.04</li>
+		<li class="fragment roll-in">PHP 5.5</li>
+		<li class="fragment roll-in">Nginx</li>
+		<li class="fragment roll-in">MySQL</li>
+		<li class="fragment roll-in">Postgres</li>
+		<li class="fragment roll-in">Node (With Bower, Grunt, and Gulp)</li>
+		<li class="fragment roll-in">Redis</li>
+		<li class="fragment roll-in">Memcached</li>
+		<li class="fragment roll-in">Beanstalkd</li>
+		<li class="fragment roll-in">Laravel Envoy</li>
+	</ul>
+	<span class="handwriting fragment padded highlight-active">&lt; make sure you have <a href="http://www.vagrantup.com">vagrant</a> and <a href="http://www.virtualbox.com">virtualbox</a> installed</span>
+</section>
+
 
 <section class="full-height" data-background="/img/vintage-routing1.jpg" data-background-transition="slide" data-transition="linear">
 	<h2 class="bar">Routing</h2>
@@ -328,7 +342,7 @@ Route::get('/hello/{name?}', function($name='stranger')
 	</div>
 	<aside class="notes">
 <i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
-<i class="fa fa-fw fa-compass"></i> /hello/Colin
+<i class="fa fa-fw fa-compass"></i> /hello/Benjamin
 	</aside>
 </section>
 
@@ -371,7 +385,7 @@ class HelloController extends BaseController {
 	</pre>
 	<aside class="notes">
 		<i class="fa fa-fw fa-terminal"></i> git checkout v3.0<br>
-		<i class="fa fa-fw fa-compass"></i> /hello/colin<br>
+		<i class="fa fa-fw fa-compass"></i> /hello/Benjamin<br>
 	</aside>
 </section>
 
@@ -1033,7 +1047,7 @@ class Author extends Eloquent {
 }
 </code>
 <code contenteditable data-trim class="php">
-$my_books = Author::where('firstname','=','Colin')->books;
+$my_books = Author::where('firstname','=','Benjamin')->books;
 </code>
 	</pre>
 </section>
@@ -1291,25 +1305,6 @@ Log::error('OMGWTFBBQ!');
 	</p>
 </section>
 
-<section>
-	<h2>Query Logging</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-$queries = DB::getQueryLog();
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-DB::connection()->disableQueryLog();
-</code>
-	</pre>
-	<aside class="notes">
-		<i class="fa fa-fw fa-terminal"></i> git checkout v6.1<br>
-		<i class="fa fa-fw fa-compass"></i> /books<br>
-		<i class="fa fa-fw fa-compass"></i> /books/1<br>
-	</aside>
-</section>
-
 
 <section class="full-height" data-background="/img/caching1.jpg" data-background-transition="fade" data-transition="linear">
 	<h2 class="bar">Caching</h2>
@@ -1375,26 +1370,6 @@ Cache::forget('key');
 </section>
 
 
-<section>
-	<h2>Advanced Cache Usage</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-$books = Cache::remember('all-books', 10, function()
-{
-	return Book::with('author')
-		->orderBy('title')
-		->get();
-});
-</code>
-	</pre>
-	<aside class="notes">
-		<i class="fa fa-fw fa-pencil"></i> app/controllers/BookController.php<br>
-		<i class="fa fa-fw fa-compass"></i> /books<br>
-		etc.
-	</aside>
-</section>
-
-
 <section class="full-height" data-background="/img/mail1.jpg" data-background-transition="fade" data-transition="linear">
 	<h2 class="bar">Mail</h2>
 </section>
@@ -1428,77 +1403,12 @@ $books = Cache::remember('all-books', 10, function()
 <code contenteditable data-trim class="php">
 Mail::send('emails.view', $data, function($message)
 {
-	$message->to('colin@example.com', 'Colin Viebrock')
+	$message->to('Benjamin@example.com', 'Benjamin Gonzalez')
 		->subject('Welcome!');
-});
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-Mail::send( array('emails.view.html', 'emails.view.text'), $data, function($message)
-{
-	$message->to('colin@example.com', 'Colin Viebrock')
-		->subject('Welcome!');
-});
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-Mail::send( array('emails.view.html', 'emails.view.text'), $data, function($message)
-{
-	$message->to('colin@example.com', 'Colin Viebrock')
-		->subject('Welcome!')
-		->cc('bar@example.com')
-		->bcc('snoop@nsa.gov');
-});
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-Mail::send( array('emails.view.html', 'emails.view.text'), $data, function($message)
-{
-	$message->to('colin@example.com', 'Colin Viebrock')
-		->subject('Welcome!')
-		->cc('bar@example.com')
-		->bcc('snoop@nsa.gov');
-
-	$message->attach($pathToFile);
-});
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-Mail::send( array('emails.view.html', 'emails.view.text'), $data, function($message)
-{
-	$message->to('colin@example.com', 'Colin Viebrock')
-		->subject('Welcome!')
-		->cc('bar@example.com')
-		->bcc('snoop@nsa.gov');
-
-	$message->attach($pathToFile, array('as' => $display, 'mime' => $mime));
 });
 </code>
 	</pre>
 	</div>
-</section>
-
-
-<section>
-	<h2>Inline data</h2>
-	<pre>
-<code contenteditable data-trim class="html">
-&lt;body&gt;
-	Here is an image &lt;img src="{{ $message->embed($pathToFile) }}"&gt;
-&lt;/body&gt;
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="html">
-&lt;body&gt;
-	Here is raw image data &lt;img src="{{ $message->embedData($data, $name) }}"&gt;
-&lt;/body&gt;
-</code>
-	</pre>
 </section>
 
 
@@ -1508,7 +1418,7 @@ Mail::send( array('emails.view.html', 'emails.view.text'), $data, function($mess
 <code contenteditable data-trim class="php">
 Mail::queue('emails.view', $data, function($message)
 {
-	$message->to('colin@example.com', 'Colin Viebrock')
+	$message->to('Benjamin@example.com', 'Benjamin Gonzalez')
 		->subject('Welcome!');
 });
 </code>
@@ -1517,7 +1427,7 @@ Mail::queue('emails.view', $data, function($message)
 <code contenteditable data-trim class="php">
 Mail::later($seconds, 'emails.view', $data, function($message)
 {
-	$message->to('colin@example.com', 'Colin Viebrock')
+	$message->to('Benjamin@example.com', 'Benjamin Gonzalez')
 		->subject('Welcome!');
 });
 </code>
@@ -1592,96 +1502,70 @@ class MyJob {
 	</pre>
 </section>
 
-
-<section>
-	<h2>Advanced Queue Usage</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-Queue::push('MyJob@someMethod', $data);
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-$date = Carbon::now()->addMinutes(15);
-Queue::later($date, 'MyJob', $data);
-</code>
-	</pre>
-</section>
-
-<section>
-	<h2>Job Handling</h2>
-	<div class="fragment-block">
-	<pre>
-<code contenteditable data-trim class="php">
-public function fire($job, $data)
-{
-		// Process the job...
-
-		$job->delete();
-}
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-public function fire($job, $data)
-{
-		// Process the job...
-
-		$job->release();
-}
-</code>
-	</pre>
-	</div>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-		$job->release( $seconds );
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-if ( $job->attempts() > 3 )
-{
-	…
-}
-</code>
-	</pre>
-
-</section>
-
-
-<section>
-	<h2>Queue Listening</h2>
-	<div class="fragment-block">
-	<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:listen
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="bash">
-php artisan queue:listen --sleep=5
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="bash">
-php artisan queue:listen --timeout=60
-</code>
-	</pre>
-	</div>
-	<pre class="fragment">
-<code contenteditable data-trim class="bash">
-php artisan queue:work
-</code>
-	</pre>
-</section>
-
-
 <section data-background="/img/other-features.jpg" data-background-transition="fade" data-transition="linear">
 	<h2 class="bar fragment consecutive">Authentication</h2>
 	<h2 class="bar fragment consecutive">Events</h2>
 	<h2 class="bar fragment consecutive">Localization</h2>
 	<h2 class="bar fragment consecutive">Packages</h2>
 </section>
+
+<section class="full-height" data-background="/img/blacksmith-s-forge.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Laravel Forge</h2>
+</section>
+
+<section>
+	<h2>Instant PHP platforms on the cloud</h2>
+	<ul>
+		<li class="fragment">
+			Works with:
+			<ul class="caret">
+				<li>Linode </li>
+				<li>Digital Ocean</li>
+				<li>AWS</li>
+				<li>Rackspace</li>
+			</ul>
+		</li>
+		<li class="fragment">
+			Super simple to set up :
+			<ul class="caret">
+				<li>Create an account </li>
+				<li>Add Api keys </li>
+				<li>Deploy ! </li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2>Laravel Forge</h2>
+	<ul>
+		<li class="fragment">
+			Main features : 
+			<ul class="caret">
+				<li class="fragment">Same setup as Laravel Homestead
+					<em class="aside">
+						same local and remote environment
+					</em>
+				</li>
+				<li class="fragment">Push to deploy
+					<em class="aside">
+						<a href="//github.com"><i class="fa fa-cloud-upload"></i> Github</a> or
+						<a href="//bitbucket.com"><i class="fa fa-cloud-upload"></i> Bitbucket</a>
+					</em>
+				</li>
+				<li class="fragment">Does not depend on Laravel ...
+					<em class="aside">
+						Tuned for Laravel, framework agnostic
+					</em>
+				</li>
+				<li class="fragment">Unlimited servers, domains, subdomains, etc...
+				</li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+
 
 <section class="shaded bg-inverse" data-background="/img/books1.jpg" data-background-transition="fade" data-transition="linear">
 	<h2>Further Reading</h2>
@@ -1708,7 +1592,7 @@ php artisan queue:work
 		</li>
 		<li class="fragment">
 			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
-			<a href="//github.com/cviebrock">github.com/cviebrock</a>
+			<a href="//github.com/benjaminrosell">github.com/BenjaminRosell</a>
 		</li>
 	</ul>
 </section>
