@@ -49,13 +49,13 @@
 <section>
 	<h2>Benjamin Gonzalez</h2>
 	<ul>
-		<li class="fragment roll-in">Web Developer, business owner
+		<li class="fragment roll-in">Web Developer
 			<em class="aside">back-end and more recently front-end</em>
 		</li>
 		<li class="fragment roll-in">Involved in PHP since 2006
 			<em class="aside">with a few years off for good behaviour</em>
 		</li>
-		<li class="fragment roll-in">Works at
+		<li class="fragment roll-in">CTO for
 			<a href="//infoprimes.com">InfoPrimes</a>, founder of
 			<a href="//meetups.com/Laravel-Montreal">Laravel Montréal</a>
 			<em class="aside">we meet every month, you are welcome :)</em>
@@ -100,6 +100,9 @@
 	</blockquote>
 	<br>
 	<p>- Taylor Otwell</p>
+	<aside class="notes">
+		<i class="fa fa-fw fa-terminal"></i> Laravel gives you the capability to quickly turn a great idea into a living project.
+	</aside>
 </section>
 
 <section data-background="/img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
@@ -156,7 +159,7 @@ composer create-project laravel/laravel my-project --prefer-dist
 		<img src="/img/wat.jpg">
 	</div>
 	<aside class="notes">
-<i class="fa fa-fw fa-terminal"></i> composer create-project laravel/laravel my-project --prefer-dist
+		<i class="fa fa-fw fa-terminal"></i> composer create-project laravel/laravel my-project --prefer-dist
 	</aside>
 </section>
 
@@ -246,7 +249,8 @@ php artisan serve --port 8000
 		</pre>
 		<aside class="notes">
 			<i class="fa fa-fw fa-terminal"></i> php artisan serve<br>
-			<i class="fa fa-fw fa-compass"></i> localhost:8000
+			<i class="fa fa-fw fa-compass"></i> localhost:8000 <br>
+			Although this is great for very small projects, dont dont benefit from all the goodness a real development environment offers
 		</aside>
 	</section>
 
@@ -271,6 +275,10 @@ php artisan serve --port 8000
 		<li class="fragment roll-in">Laravel Envoy</li>
 	</ul>
 	<span class="handwriting fragment padded highlight-active">&lt; make sure you have <a href="http://www.vagrantup.com">vagrant</a> and <a href="http://www.virtualbox.com">virtualbox</a> installed</span>
+	<aside class="notes">
+		Homestead is a prepackaged vagrant box with all the tools that you need to fully benefit from laravel's protential.br <br>
+		In a simple process, you have a virtual machine that allows you to keep your machine clean from development scrap...		
+	</aside>
 </section>
 
 
@@ -287,10 +295,19 @@ Route::get('/', function() {
 	return 'Hello World!';
 });
 </code>
+<code contenteditable data-trim class="php" data-filename="app/routes.php">
+Route::post('/', function() {
+	// insert whatever code here !
+});
+</code>
 	</pre>
 	<aside class="notes">
 		<i class="fa fa-fw fa-terminal"></i> git checkout v2.0
 		<i class="fa fa-fw fa-compass"></i> localhost:8000
+	</aside>
+	<aside class="notes">
+		Laravel comes with simple yet powerful way to handle your application's routing needs. <br>
+		This is the simplest Laravel route : an URI and a callback.		
 	</aside>
 </section>
 
@@ -342,7 +359,9 @@ Route::get('/hello/{name?}', function($name='stranger')
 	</div>
 	<aside class="notes">
 <i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
-<i class="fa fa-fw fa-compass"></i> /hello/Benjamin
+<i class="fa fa-fw fa-compass"></i> /hello/Benjamin <br>
+Soon we will realise that it's not the best practice to develop a whole application within the routes.php file...
+
 	</aside>
 </section>
 
@@ -415,7 +434,10 @@ class UsersController extends BaseController {
 	<aside class="notes">
 <i class="fa fa-fw fa-terminal"></i> git checkout v3.0<br>
 <i class="fa fa-fw fa-pencil"></i> app/routes.php<br>
-<i class="fa fa-fw fa-pencil"></i> app/controllers/UsersController.php
+<i class="fa fa-fw fa-pencil"></i> app/controllers/UsersController.php <br>
+Laravel allows you to define a single route to handle every action in a controller  REST naming conventions. <br>
+		First define the route controller method <br>
+		Next, just add methods to your controller, prefixed with the HTTP verb they respond to
 	</aside>
 </section>
 
@@ -457,6 +479,7 @@ php artisan routes
 <i class="fa fa-fw fa-pencil"></i> app/routes.php<br>
 <i class="fa fa-fw fa-pencil"></i> app/controllers/PostsController.php<br>
 <i class="fa fa-fw fa-terminal"></i> php artisan routes<br>
+from 0 to crud in a few lines of code... you can literally build a basic api endpoint within minutes...
 	</aside>
 </section>
 
