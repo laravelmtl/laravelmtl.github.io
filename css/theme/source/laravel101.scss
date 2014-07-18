@@ -209,6 +209,14 @@ $monospaceFont: 'Ubuntu Mono', monospace;
 
 	}
 
+	section img.logo {
+		vertical-align: top;
+		border: 0;
+		height: 185px;
+		background: none;
+		box-shadow: none;
+	}
+
 	h3 {
 		text-align: left;
 		color: $greyDark;

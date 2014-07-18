@@ -1,11 +1,11 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,700);
-@import url(//fonts.googleapis.com/css?family=Lato:300);
-@import url(//fonts.googleapis.com/css?family=Loved+by+the+King);
-@import url(//fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps:700);
 /**
  * Laravel 101 theme for reveal.js.
  * Author: Colin Viebrock
  */
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,700);
+@import url(//fonts.googleapis.com/css?family=Lato:300);
+@import url(//fonts.googleapis.com/css?family=Loved+by+the+King);
+@import url(//fonts.googleapis.com/css?family=Oleo+Script+Swash+Caps:700);
 /* FONT PATH
  * -------------------------- */
 @font-face {
@@ -1125,6 +1125,12 @@ body {
     border: 0; }
     .reveal section img.inline.fixed-height {
       height: 6em; }
+  .reveal section img.logo {
+    vertical-align: top;
+    border: 0;
+    height: 185px;
+    background: none;
+    box-shadow: none; }
   .reveal h3 {
     text-align: left;
     color: #777777;
