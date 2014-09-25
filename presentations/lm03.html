@@ -39,335 +39,237 @@
 
 
 <section data-background="../img/background.jpg" data-background-transition="zoom" class="bg-inverse" data-transition="fade">
-	<h1>Getting the basis right</h1>
+	<h1>Building a simple API</h1>
 	<p>
-		Laravel Montréal #2 - July 17th, 2014
+		Laravel Montréal #3 - September 25th, 2014
 	</p>
-</section>
-
-
-<section>
-	<h2>Benjamin Gonzalez</h2>
-	<ul>
-		<li class="fragment roll-in">Web Developer
-			<em class="aside">back-end and more recently front-end</em>
-		</li>
-		<li class="fragment roll-in">Involved in PHP since 2006
-			<em class="aside">with a few years off for good behaviour</em>
-		</li>
-		<li class="fragment roll-in">CTO for
-			<a href="//infoprimes.com">InfoPrimes</a>, founder of
-			<a href="//meetups.com/Laravel-Montreal">Laravel Montréal</a>
-			<em class="aside">we meet every month, you are welcome :)</em>
-		</li>
-		<li class="fragment roll-in">@BenjaminRosell at
-			<a href="//github.com/BenjaminRosell"> Github</a> and
-			<a href="//twitter.com/BenjaminRosell"> Twitter</a>
-			<span class="handwriting fragment">&hellip; also on <a href="//www.linkedin.com/pub/benjamin-gonzalez-rosell/1a/929/93"> LinkedIn</a></span>
-		</li>
-	</ul>
 </section>
 
 
 <section data-background="../img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
-	<h1>Laravel</h1>
+	<h1>Before we start ...</h1>
 	<p class="fragment">
-		A free, open source, MVC web-application framework
+		Thanks for comming !
 	</p>
 	<p class="fragment">
-		2011 (v1.0) &mdash; current (v4.2.05)
+		Your feedback is important !
 	</p>
 	<p class="fragment">
-		Simple to use, elegant, and expressive API
+		Sponsors
 	</p>
 	<p class="fragment">
-		Emphasis on testability
+		Jobs
 	</p>
 	<p class="fragment">
-		Great documentation
+		Get involved
 	</p>
 	<p class="fragment">
-		Package-based dependency management
-	</p>
-	<p class="fragment">
-		<a href="//laravel.com"><i class="fa fa-fw fa-cloud-download"></i> laravel.com</a>
+		Comming soon in Laravel Montréal
 	</p>
 </section>
 
-<section data-background="../img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
-	<blockquote>
-		« Any time that I have to do something that is a pain... it puts a seed in my head to work it into Laravel »
-	</blockquote>
-	<br>
-	<p>- Taylor Otwell</p>
-	<aside class="notes">
-		<i class="fa fa-fw fa-terminal"></i> Laravel gives you the capability to quickly turn a great idea into a living project.
-	</aside>
-</section>
-
-<section data-background="../img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
-	<h1>Laravel is not</h1>
-	<p class="fragment">
-		full of static methods...
-	</p>
-	<p class="fragment">
-		a restrictive framework
-	</p>
-	<p class="fragment">
-		the absolute best framework
-	</p>
-	<p class="fragment">
-		always the best solution
-	</p>
-</section>
-
-
-<section class="full-height" data-background="../img/tyingshoes.jpg" data-background-transition="slide" data-transition="linear">
+	
+<section class="full-height" data-background="../img/geek.jpg" data-background-transition="slide" data-transition="linear">
 	<h2 class="bar">Getting Started</h2>
 </section>
 
 
 <section>
-	<h2>Prerequisites</h2>
+	<h2>What in the world is an API ?</h2>
+	<blockquote>In computer programming, an application programming interface (API) specifies a software component in terms of its operations, their inputs and outputs and underlying types. Its main purpose is to define a set of functionalities that are independent of their respective implementation, allowing both definition and implementation to vary without compromising each other.</blockquote>
+	<div class="fragment wat skewed stamp-in" >
+		<img src="../img/eddie.gif">
+	</div>
+</section>
+
+<section class="full-height" data-background="../img/drive.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">It's like Mc'Donalds drive through</h2>
+</section>
+
+
+<section>
+	<h2>Let's talk about REST</h2>
+
+	<blockquote class="fragment">
+		"A RESTful web service (also called a RESTful web API) is a web service implemented using HYYP and the principles of REST. It's a collection of resources..."<br>
+		- Wikipedia
+	</blockquote>
+
+</section>
+
+<section>
+	<h2>Let's talk about REST</h2>
+
 	<ul>
-		<li class="fragment roll-in">PHP 5.4.x</li>
-		<li class="fragment roll-in">Mcrypt extension</li>
-		<li class="fragment roll-in">JSON extension</li>
-		</li>
-		<li class="fragment roll-in">Composer
+		<li class="fragment roll-in">REST uses standard HTTP methods
 			<em class="aside">
-				<a href="//getcomposer.org"><i class="fa fa-cloud-download"></i> getcomposer.org</a>
-				and install it globally!
+ 				to perform specific actions
 			</em>
 		</li>
+		<li class="fragment roll-in">GET    => Read</li>
+		<li class="fragment roll-in">POST   => Create</li>
+		<li class="fragment roll-in">PUT    => Update</li>
+		<li class="fragment roll-in">DELETE => Delete 
+			<em class="aside">
+ 				really ??
+			</em>
+		</li>
+	</ul>
 </section>
-
-
-<section class="full-height" data-background="../img/vintage-computer3.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Your First Project</h2>
-</section>
-
 
 <section>
-	<h2>Starting a New Project</h2>
-	<pre>
-<code contenteditable data-trim class="bash">
-composer create-project laravel/laravel contacts --prefer-dist
-</code>
-	</pre>
-	<div class="fragment wat skewed stamp-in" >
-		<img src="../img/wat.jpg">
-	</div>
-	<aside class="notes">
-		<i class="fa fa-fw fa-terminal"></i> composer create-project laravel/laravel my-project --prefer-dist
-	</aside>
-</section>
+	<h2>There is not a right way to do things...</h2>
 
-
-<section data-background="..#706da7" class="bg-inverse" data-transition="zoom">
-	<h2 class="no-border"><i class="fa fa-exclamation-triangle fa-lg fa-fw"></i> Git it under control</h2>
-	<!-- <div class="handwriting fragment" style="left: 10em; top: 4em;">
-		I see what you did.
-	</div> -->
-</section>
-
-
-<section class="full-height" data-background="../img/cabinet.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Project Structure</h2>
-</section>
-
-
-<section>
-	<h2>Project Folders</h2>
-	<ul class="folders">
-		<li>app
-			<span class="handwriting fragment inline padded highlight-active">&lt; your stuff</span>
+	<p>but there are a series of good practives that you can follow :</p>
+	<ul>
+		<li class="fragment roll-in">Best practices 
+			<em class="aside">
+				<a href="//www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api"><i class="fa fa-cloud-download"></i> Vinay Sahni</a>
+			</em>
 		</li>
-		<li>bootstrap
-			<span class="handwriting fragment inline padded highlight-active">&lt;  startup stuff</span>
+		<li class="fragment roll-in">JSON-API standard
+			<em class="aside">
+				<a href="http://jsonapi.org/"><i class="fa fa-cloud-download"></i> jsonapi.org</a>
+			</em>
 		</li>
-		<li>public
-			<span class="handwriting fragment inline padded highlight-active">&lt; static stuff: img, js, css, etc.</span>
-		</li>
-		<li class="file">composer.json
-			<span class="handwriting fragment inline padded highlight-active">&lt; other people's stuff you want</span>
-		</li>
-		<li>vendor
-			<span class="handwriting fragment inline padded highlight-active">&lt; other people's stuff</span>
+		<li class="fragment roll-in">Building API's you wont hate
+			<em class="aside">
+				<a href="https://leanpub.com/build-apis-you-wont-hate"><i class="fa fa-cloud-download"></i> by Phil Sturgeon</a>
+			</em>
 		</li>
 	</ul>
 </section>
 
 
-<section>
-	<h2>Application Folders</h2>
-	<ul class="folders">
-		<li>app
-			<ul>
-				<li>commands</li>
-				<li>config</li>
-				<li class="fragment highlight-blue" data-fragment-index="1">controllers</li>
-				<li>database</li>
-				<li>lang</li>
-				<li class="fragment highlight-blue" data-fragment-index="1">models</li>
-				<li>start</li>
-				<li>storage</li>
-				<li>tests</li>
-				<li class="fragment highlight-blue" data-fragment-index="1">views</li>
-				<li class="file">filters.php</li>
-				<li class="file fragment highlight-blue" data-fragment-index="1">routes.php</li>
-			</ul>
-		</li>
-	</ul>
+<section class="full-height" data-background="../img/pauline1.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Mistakes you want to avoid ...</h2>
 </section>
 
 
-<section class="full-height" data-background="../img/bob-ross.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Artisan</h2>
+<section>
+	<h2>Standards are not inforced...</h2>
+	<p class="fragment">Your API will probably still work if you dont follow them...</p>
+	<p class="fragment">but it will eventually catch you up !</p>
+	<img  class="fragment roll-in" src="../img/funny-sports-pictures-swimming-fail.gif" alt="">
 </section>
 
 
 <section class="stack">
 	<section>
-		<h2>Artisan</h2>
-		<p>
-			Command line tool to make working with Laravel easier.
-		</p>
+		<h2>This is a valid 404 response they said...</h2>
 		<pre>
 <code contenteditable data-trim class="bash">
-php artisan
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+Not found
+</code>
+		</pre>
+	</section>
+	<section>
+		<h2>This is valid JSON</h2>
+		<pre>
+<code contenteditable data-trim class="bash">
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+"1|My first contact|benjamin.rosell@gmail.com|2014-12-12|2015-12-20|active
+\n2|My second contact|jonathan.rosell@gmail.com|2013-10-19|2010-24-04|inactive"
 </code>
 		</pre>
 	</section>
 
 	<section>
-		<h2>Built-in Server</h2>
+		<h2>And so was this...</h2>
 		<pre>
 <code contenteditable data-trim class="bash">
-php artisan serve --port 8000
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+VHlwZSBvciBwYXN0ZSBhbnkgc3RyaW5nIHRvIHRoZSBibHVlIHRleHQgYm94LiBJdCBjYW4gYmUgZWl0aGVyIG5vcm1
+hbCBzdHJpbmcgb3IgQkFTRTY0IHN0cmluZy4=
 </code>
 		</pre>
-		<aside class="notes">
-			<i class="fa fa-fw fa-terminal"></i> php artisan serve<br>
-			<i class="fa fa-fw fa-compass"></i> localhost:8000 <br>
-			Although this is great for very small projects, dont dont benefit from all the goodness a real development environment offers
-		</aside>
+		<div class="fragment wat skewed stamp-in" >
+			<img src="../img/witw.gif">
+		</div>
 	</section>
-
-</section>
-
-<section class="full-height" data-background="../img/homestead.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Homestead</h2>
-</section>
-
-<section>
-	<h2>Software installed</h2>
-	<ul>
-		<li class="fragment roll-in">Ubuntu 14.04</li>
-		<li class="fragment roll-in">PHP 5.5</li>
-		<li class="fragment roll-in">Nginx</li>
-		<li class="fragment roll-in">MySQL</li>
-		<li class="fragment roll-in">Postgres</li>
-		<li class="fragment roll-in">Node (With Bower, Grunt, and Gulp)</li>
-		<li class="fragment roll-in">Redis</li>
-		<li class="fragment roll-in">Memcached</li>
-		<li class="fragment roll-in">Beanstalkd</li>
-		<li class="fragment roll-in">Laravel Envoy</li>
-	</ul>
-	<span class="handwriting fragment padded highlight-active">&lt; make sure you have <a href="http://www.vagrantup.com">vagrant</a> and <a href="http://www.virtualbox.com">virtualbox</a> installed</span>
-	<aside class="notes">
-		Homestead is a prepackaged vagrant box with all the tools that you need to fully benefit from laravel's protential.br <br>
-		In a simple process, you have a virtual machine that allows you to keep your machine clean from development scrap...		
-	</aside>
-</section>
-
-<section>
-	<h2>Installing homestead</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-vagrant box add laravel/homestead
-</code>
-
-<code contenteditable data-trim class="bash">
-git clone https://github.com/laravel/homestead.git Homestead
-</code>
-</pre>
-</section>
-
-<section>
-	<h2>The config file</h2>
-	<pre>
-<code contenteditable data-trim class="yml" data-filename="homestead.yml">
----
-ip: "192.168.10.10"
-memory: 2048
-cpus: 1
-
-authorize: /Users/benjamingonzalez/.ssh/id_rsa.pub
-
-keys:
-    - /Users/benjamingonzalez/.ssh/id_rsa
-
-folders:
-    - map: /Applications/MAMP/htdocs/contacts
-      to: /home/vagrant/code/contacts
-
-sites:
-    - map: contacts.app
-      to: /home/vagrant/code/contacts/public
-
-variables:
-    - key: APP_ENV
-      value: local
-</code>
-</pre>
 </section>
 
 
-<section class="full-height" data-background="../img/vintage-routing1.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Routing</h2>
+<section class="full-height" data-background="../img/throw.gif" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">DO not use the browser to test...</h2>
+</section>
+
+<section class="full-height" data-background="../img/vintage-computer3.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Best practices</h2>
+</section>
+
+<section class="stack">
+	<section>
+		<h2>Simple routing</h2>
+		<p class="fragment">Just follow the RESTful standards</p>
+		<h3 class="fragment" style="text-align:center">/{type}/{id}</h3>
+		<h4 class="fragment">/{type}/{id}/{sub-type}/{id}</h4>
+	</section>
+	<section>
+		<h2>For instance...</h2>
+		<h3 class="fragment" style="text-align:center">/contacts/2</h3>
+		<h4 class="fragment">/contacts/1/insurance/24</h4>
+	</section>
+	<section>
+		<h2>Method + URI = Action</h2>
+		<h3 class="fragment" style="text-align:center">GET /contacts</h3>
+		<h4 class="fragment">Gets all contacts</h4>
+		<h3 class="fragment" style="text-align:center">GET /contacts/1</h3>
+		<h4 class="fragment">Gets contact with ID of 1</h4>
+		<h3 class="fragment" style="text-align:center">POST /contacts</h3>
+		<h4 class="fragment">Creates a new contact</h4>
+		<h3 class="fragment" style="text-align:center">PUT /contacts/2</h3>
+		<h4 class="fragment">Upadtes the contact with an id of 2</h4>
+		<h3 class="fragment" style="text-align:center">DELETE /contacts/2</h3>
+		<h4 class="fragment">Deletes the contact with an id of 2</h4>
+	</section>
 </section>
 
 
 <section>
-	<h2>Simple routing</h2>
+	<h2>Laravel makes it really easy for you !</h2>
 	<div class="fragment-block">
 		<pre>
 <code contenteditable data-trim class="php" data-filename="app/routes.php">
 // Simple resource routing
-Route::resource('/', 'ContactsController');
+Route::resource('/contacts', 'ContactsController');
 </code>
 		</pre>
 		</pre>
 	</div>
 	<aside class="notes">
 <i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
-<i class="fa fa-fw fa-compass"></i> /hello/Benjamin <br>
-Soon we will realise that it's not the best practice to develop a whole application within the routes.php file...
-
+<i class="fa fa-fw fa-compass"></i> 
 	</aside>
 </section>
 
 
 <section>
-	<h2>Listing Routes</h2>
-	<pre>
-<code contenteditable data-trim class="bash">
-php artisan routes
+	<h2>It's always nice to version your API</h2>
+	<h3 class="fragment" style="text-align:center">GET /v1/contacts</h3>
+	<div class="fragment">
+		<pre>
+<code contenteditable data-trim class="php" data-filename="app/routes.php">
+Route::group(array('prefix' => 'v1'), function()
+{
+		Route::resource('/contacts', 'ContactsController');
+});
 </code>
-	</pre>
-	<aside class="notes">
-		<i class="fa fa-fw fa-terminal"></i> php artisan routes<br>
-	</aside>
-</section>
-
-<section class="full-height" data-background="../img/vintage-controller1.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Controllers</h2>
+		</pre>
+		</pre>
+	</div>
 </section>
 
 
 <section>
-	<h2>Resource Controllers</h2>
+	<h2>Setting up the Controller</h2>
 	<pre>
 <code contenteditable data-trim class="bash">
 php artisan controller:make ContactsController
@@ -375,11 +277,11 @@ php artisan controller:make ContactsController
 	</pre>
 	<pre class="fragment">
 <code contenteditable data-trim class="php" data-filename="app/routes.php">
-Route::resource('/', 'ContactsController');
+Route::resource('/contacts', 'ContactsController');
 </code>
 	</pre>
 	<pre class="fragment">
-<code contenteditable data-trim class="php" data-filename="app/controllers/PostsController.php">
+<code contenteditable data-trim class="php" data-filename="app/controllers/ContactsController.php">
 class ContactsController extends BaseController {
 
 	public function index() {}          // GET    /
@@ -406,90 +308,6 @@ php artisan routes
 from 0 to crud in a few lines of code... you can literally build a basic api endpoint within minutes...
 	</aside>
 </section>
-
-<section class="full-height" data-background="../img/tape-drives.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Database setup</h2>
-</section>
-
-
-<section>
-	<h2>Supported Databases</h2>
-	<p>
-		Out-of-the-box support for:
-	</p>
-	<ul>
-		<li>MySQL</li>
-		<li>Postgres</li>
-		<li>SQLite</li>
-		<li>SQL Server</li>
-	</ul>
-</section>
-
-
-<section class="stack">
-
-	<section>
-		<h2>Configuration</h2>
-		<div class="fragment-block">
-			<pre class="fragmentx">
-<code contenteditable data-trim class="php" data-filename="app/config/database.php">
-return array(
-	'default' => 'mysql',
-
-	'connections' => array(
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'contacts',
-			'username'  => 'homestead',
-			'password'  => 'secret'
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		),
-	…
-</code>
-		</pre>
-			<pre class="fragment">
-<code contenteditable data-trim class="php" data-filename="app/config/database.php">
-return array(
-	'default' => 'mysql',
-
-	'connections' => array(
-		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => $_ENV['MYSQL_DB'],
-			'username'  => $_ENV['MYSQL_USER'],
-			'password'  => $_ENV['MYSQL_PASS'],
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		),
-	…
-</code>
-		</pre>
-	</div>
-	</section>
-
-	<section>
-		<h2>Secret Environment Variables</h2>
-		<pre>
-<code contenteditable data-trim class="php" data-filename=".env.php">
-return array(
-	'MYSQL_DB' => 'contacts',
-	'MYSQL_USER' => 'homestead',
-	'MYSQL_PASS' => 'secret',
-);
-</code>
-		</pre>
-		<aside class="notes">
-			<i class="fa fa-fw fa-terminal"></i> git checkout v5.0<br>
-		</aside>
-	</section>
-
-</section>
-
 
 <section class="full-height" data-background="../img/migration2.jpg" data-background-transition="slide" data-transition="linear">
 	<h2 class="bar">Migrations</h2>
@@ -549,7 +367,7 @@ class CreatePostsTable extends Migration {
 <code contenteditable data-trim class="php">
 public function up()
 {
-	Schema::create('posts', function(Blueprint $table) {
+	Schema::create('contacts', function(Blueprint $table) {
 		$table->increments('id');
 		$table->string('name', 50);
 		$table->string('email')->nullable()->unique();
@@ -562,7 +380,7 @@ public function up()
 <code contenteditable data-trim class="php">
 public function down()
 {
-	Schema::drop('posts');
+	Schema::drop('contacts');
 }
 </code>
 		</pre>
@@ -590,7 +408,7 @@ php artisan migrate:rollback
 
 </section>
 
-<section class="full-height" data-background="../img/models2.jpg" data-background-transition="fade" data-transition="linear">
+<section class="full-height" data-background="../img/model.jpg" data-background-transition="fade" data-transition="linear">
 	<h2 class="bar">Models</h2>
 </section>
 
@@ -618,27 +436,49 @@ class Contact extends Eloquent {}
      */
     public function index()
     {
-        $contacts = Contact::all();
-
-        return View::make('contacts.index', compact('contacts'));
+        return Contact::all();
     }
 </code>
 	</pre>	
 </section>
+
 <section>
-	<h2>Displaying a new contact form</h2>
-	<pre class="fragment">
+	<h2>Maybe even better</h2>
+	<pre>
 <code contenteditable data-trim class="php" data-filename="app/controllers/ContactsController.php">
 
     /**
-     * Show the form for creating a new contact
+     * Display a listing of contacts
      *
      * @return Response
      */
-    public function create()
+    public function index()
     {
-        return View::make('contacts.create');
+        $contacts =  Contact::all();
+        return Response::json($contacts->toArray());
     }
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>GET /contacts</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+HTTP/1.1 200 OK
+Content-Type: text/html
+
+{
+	[
+		"id": "1",
+		"name": "Benjamin Gonzalez",
+		"email": "benjamin.rosell@gmail.com",
+		"telephone": "514-236-1889",
+		"active": "true",
+		"created_at": "2014-09-25 10:00:00",
+		"updated_at": "2014-09-25 10:00:00"
+	]
+}
 </code>
 	</pre>	
 </section>
@@ -658,17 +498,43 @@ class Contact extends Eloquent {}
 
         if ($validator->fails())
         {
-            return Redirect::back()->withErrors($validator)->withInput();
+            App::abort('500', 'The model was not saved, validation failed');
         }
 
-        Contact::create($data);
-
-        return Redirect::route('contacts.index');
+        $contact = Contact::create($data);
+        return Response::json($contact->toArray(), 201);
     }
 
 </code>
 	</pre>	
 </section>
+
+<section>
+	<h2>POST /contacts</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+REQUEST:
+name=Benjamin+Gonzalez&email=benjamin.rosell@gmail.com&telephone=514+236+1889
+
+RESPONSE:
+HTTP/1.1 201 Created
+Content-Type: text/html
+
+{
+	"id": "1",
+	"name": "Benjamin Gonzalez",
+	"email": "benjamin.rosell@gmail.com",
+	"telephone": "514-236-1889",
+	"active": "true",
+	"created_at": "2014-09-25 10:00:00",
+	"updated_at": "2014-09-25 10:00:00"
+}
+</code>
+	</pre>	
+</section>
+
+
+
 <section>
 	<h2>Showing a contact</h2>
 	<pre class="fragment">
@@ -682,35 +548,34 @@ class Contact extends Eloquent {}
      */
     public function show($id)
     {
-        $contact = Contact::findOrFail($id);
-
-        return View::make('contacts.show', compact('contact'));
+        return Response::json(Contact::findOrFail($id));
     }
 
 </code>
 	</pre>	
 </section>
+
 <section>
-	<h2>Edit form</h2>
-	<pre class="fragment">
-<code contenteditable data-trim class="php" data-filename="app/controllers/ContactsController.php">
+	<h2>GET /contacts/1</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+HTTP/1.1 200 OK
+Content-Type: text/html
 
-    /**
-     * Show the form for editing the specified contact.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $contact = Contact::find($id);
-
-        return View::make('contacts.edit', compact('contact'));
-    }
-
+{
+	"id": "1",
+	"name": "Benjamin Gonzalez",
+	"email": "benjamin.rosell@gmail.com",
+	"telephone": "514-236-1889",
+	"active": "true",
+	"created_at": "2014-09-25 10:00:00",
+	"updated_at": "2014-09-25 10:00:00"
+}
 </code>
 	</pre>	
-	</section>
+</section>
+
+
 <section>
 	<h2>Updating the contact</h2>
 	<pre class="fragment">
@@ -730,17 +595,41 @@ class Contact extends Eloquent {}
 
         if ($validator->fails())
         {
-            return Redirect::back()->withErrors($validator)->withInput();
+            App::abort('500', 'The model was not saved');
         }
 
-        $contact->update($data);
-
-        return Redirect::route('contacts.index');
+        return Response::json($contact->update($data));
     }
 
 </code>
 	</pre>	
 </section>
+
+<section>
+	<h2>PUT /contacts/1</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+REQUEST:
+name=Benjamin+Rosell
+
+RESPONSE:
+HTTP/1.1 200 Ok
+Content-Type: text/html
+
+{
+	"id": "1",
+	"name": "Benjamin Rosell",
+	"email": "benjamin.rosell@gmail.com",
+	"telephone": "514-236-1889",
+	"active": "true",
+	"created_at": "2014-09-25 10:00:00",
+	"updated_at": "2014-09-25 10:00:00"
+}
+</code>
+	</pre>	
+</section>
+
+
 <section>
 	<h2>Deleting a contact</h2>
 	<pre class="fragment">
@@ -756,381 +645,233 @@ class Contact extends Eloquent {}
     {
         Contact::destroy($id);
 
-        return Redirect::route('contacts.index');
+        return Response::make(null, 204);
     }
 
 }
 </code>
 	</pre>
 </section>
+
+<section>
+	<h2>DELETE /contacts/1</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+HTTP/1.1 204 No content
+
+</code>
+	</pre>	
+</section>
+
 </section>
 
 
 
-<section class="full-height" data-background="../img/views.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Views</h2>
+
+<section class="full-height" data-background="../img/errors.gif" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">What about errors ?</h2>
+</section>
+
+<section>
+	<h2>Use the right codes for the right situation</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+200: The request was successful.
+201: The resource was successfully created.
+204: The request was successful, but we did not send any content back.
+400: The request failed due to an application error, such as a validation error.
+401: An API key was either not sent or invalid.
+403: The resource does not belong to the authenticated user and is forbidden.
+404: The resource was not found.
+500: A server error occurred.
+</code>
+	</pre>	
 </section>
 
 
 <section>
-	<h2>Passing Data to Views</h2>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="php" data-filename="app/controller/HelloController.php">
-class HelloController extends BaseController {
+	<h2>Now we need to respond with JSON</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="app/errors.php">	
 
-	public function showWelcome($name='stranger')
+// General HttpException handler
+App::error(function(Symfony\Component\HttpKernel\Exception\HttpException $e, $code)
+{
+	$headers = $e->getHeaders();
+
+	switch ($code)
 	{
-		return View::make('hello', array('name'=>$name) );
+		case 401:
+			$default_message = 'Invalid API key';
+			$headers['WWW-Authenticate'] = 'Basic realm="REST API"';
+		break;
+
+		case 403:
+			$default_message = 'Insufficient privileges to perform this action';
+		break;
+
+		case 404:
+			$default_message = 'The requested resource was not found';
+		break;
+
+		default:
+			$default_message = 'An error was encountered';
 	}
 
-}
+	return Response::json(array(
+		'error' => $e->getMessage() ?: $default_message,
+	), $code, $headers);
+});
 </code>
-		</pre>
-		<pre class="fragment">
-<code contenteditable data-trim class="php" data-filename="app/controller/HelloController.php">
-class HelloController extends BaseController {
+	</pre>	
+</section>
 
-	public function showWelcome($name='stranger')
+
+<section>
+	<h2>Some custom exception</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="app/errors.php">	
+
+App::error(function(ErrorMessageException $e)
+{
+	$messages = $e->getMessages()->all();
+
+	return Response::json(array(
+		'error' => $messages[0],
+	), 400);
+});
+
+// NotFoundException handler
+App::error(function(NotFoundException $e)
+{
+	$default_message = 'The requested resource was not found';
+
+	return Response::json(array(
+		'error' => $e->getMessage() ?: $default_message,
+	), 404);
+});
+
+// PermissionException handler
+App::error(function(PermissionException $e)
+{
+	$default_message = 'Insufficient privileges to perform this action';
+
+	return Response::json(array(
+		'error' => $e->getMessage() ?: $default_message,
+	), 403);
+});
+
+class ErrorMessageException extends RuntimeException {}
+class NotFoundException extends RuntimeException {}
+class PermissionException extends RuntimeException {}
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>GET /contacts/yehaa</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+HTTP/1.1 404 Not found
+Content-Type: application/json
+
+{
+	"error": "The requested resource was not found";
+}
+
+</code>
+	</pre>	
+</section>
+
+<section class="full-height" data-background="../img/secret.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Authentication</h2>
+</section>
+
+<section>
+	<h2>Let's stick to HTTP authentication</h2>
+	<p class="fragment">First we neet to create an API key...</p>
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="app/models/user.php">	
+
+		/**
+	 * Generate a random, unique API key.
+	 *
+	 * @return string
+	 */
+	public static function createApiKey()
 	{
-		return View::make('hello', compact('name') );
+		return Str::random(32);
+	}
+</code>
+	</pre>	
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="app/events.php">	
+
+User::creating(function($user)
+{
+	$user->api_key = User::createApiKey();
+});
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>Now, we create a filter</h2>
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="app/routes.php">	
+
+	Route::filter('api.auth', function()
+{
+	if (!Request::getUser())
+	{
+		App::abort(401, 'A valid API key is required');
 	}
 
-}
-</code>
-		</pre>
-	</div>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="html" data-filename="app/views/hello.php">
-&lt;html&gt;
-	&lt;body&gt;
-		&lt;p&gt;Hello, &lt;?php echo e($name); ?&gt;!&lt;/p&gt;
-	&lt;/body&gt;
-&lt;/html&gt;
-</code>
-		</pre>
-		<pre class="fragment">
-<code contenteditable data-trim class="html" data-filename="app/views/hello.blade.php">
-&lt;html&gt;
-	&lt;body&gt;
-		&lt;p&gt;Hello, {{{ $name }}}!&lt;/p&gt;
-	&lt;/body&gt;
-&lt;/html&gt;
-</code>
-		</pre>
-	</div>
-	<aside class="notes">
-<i class="fa fa-fw fa-terminal"></i> git checkout 4.0<br>
-<i class="fa fa-fw fa-pencil"></i> app/controllers/HelloController.php<br>
-<i class="fa fa-fw fa-pencil"></i> app/views/hello.blade.php<br>
-	</aside>
-</section>
+	$user = User::where('api_key', '=', Request::getUser())->first();
 
+	if (!$user)
+	{
+		App::abort(401);
+	}
 
-<section class="full-height" data-background="../img/blade1.png" data-background-transition="zoom" data-transition="linear">
-	<h2 class="bar">Blade Templating</h2>
+	Auth::login($user);
+});
+
+</code>
+	</pre>	
 </section>
 
 
 
-<section class="stack">
-
-	<section>
-		<h2>Layouts</h2>
-		<pre>
-<code contenteditable data-trim class="html" data-filename="app/views/layouts/master.blade.php">
-&lt;html&gt;
-	&lt;body&gt;
-		@include('header')  {{-- app/views/header.blade.php --}}
-
-		@section('sidebar')
-			This is the master sidebar.
-		@show
-
-		&lt;div class="container"&gt;
-			@yield('content', 'Default content')
-		&lt;/div&gt;
-	&lt;/body&gt;
-&lt;/html&gt;
-</code>
-		</pre>
-		<pre>
-<code contenteditable data-trim class="php" data-filename="app/views/VIEWNAME.blade.php">
-@extends('layouts.master')
-
-@section('sidebar')
-	@parent
-	<p>This is appended to the master sidebar.</p>
-@stop
-
-@section('content')
-	<p>This is my body content.</p>
-@stop
-</code>
-		</pre>
-		<aside class="notes">
-			<i class="fa fa-fw fa-terminal"></i> git checkout v4.1<br>
-		</aside>
-	</section>
-
-</section>
-
-
-<section class="full-height" data-background="../img/forms2.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">Form Handing</h2>
-</section>
-
-
-<section>
-	<h2>Building Forms</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-{{ Form::open() }}
-
-	{{ Form::label('name') }}
-	{{ Form::text('name', 'default', array('class'=>'form-control') }}
-
-	{{ Form::label('email') }}
-	{{ Form::email('email') }}
-
-	{{ Form::label('phone') }}
-	{{ Form::email('phone') }}
-
-	{{ Form::checkbox('is_active', 1, null, array('tabindex'=> 4 ) }}
-		{{ Form::label('is_active', 'Yes') }}
-
-	{{ Form::submit('Send it!')}}
-
-{{ Form::close() }}
-
-</code>
-	</pre>
+<section class="full-height" data-background="../img/traffic-controller_02.png" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Rate Limiting</h2>
 </section>
 
 <section>
-	<h2>Extracting forms !</h2>
-	<pre>
-<code contenteditable data-trim class="php" data-filename="app/views/create.blade.php">
-<h2>Creating a contact</h2>
-
-{{ Form::open(['method' => 'POST', 'route' => ['store' => $contact->id]]) }}
-
-	@include('contacts.partials.form')
-
-{{ Form::close() }}
-
-</code>
-	</pre>
+	<h2>Laravel Magic at it's purest</h2>
 	<pre class="fragment">
-<code contenteditable data-trim class="php" data-filename="app/views/edit.blade.php">
-<h2>Updating a contact</h2>
+<code contenteditable data-trim class="php" data-filename="app/routes.php">	
 
-{{ Form::open(['method' => 'PATCH', 'route' => ['update' => $contact->id]]) }}
-
-	@include('contacts.partials.form')
-{{ Form::close() }}
-
-</code>
-	</pre>
-</section>
-
-
-<section>
-	<h2>Form Model Binding</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-$contact = Contact::findOrFail($id);
-return View::make('contacts.edit', compact('contact'));
-</code>
-	</pre>
-	<pre>
-<code contenteditable data-trim class="php">
-{{ Form::model($contact, array('route'=>array('update', $contact->id), 'method'=>'PUT') ) }}
-
-@include('contacts.partials.form')
-
-{{ Form::close() }}
-</code>
-	</pre>
-</section>
-
-
-<section class="full-height" data-background="../img/validate.jpg" data-background-transition="fade">
-	<h2 class="bar">Validation</h2>
-</section>
-
-
-
-<section>
-	<h2>Validation</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-$validator = Validator::make( $data, $rules );
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-if ( $validator->fails() )       // ->passes()
+Route::filter('api.limit', function()
 {
-	$messages = $validator->messages();
-	…
-}
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-if ( $messages->has('email') )
-{
-	echo $messages->first('email', '<p>:message</p>');
-}
-</code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php">
-$messages->get('field');
-$messages->all();
-</code>
-	</pre>
-</section>
+	$key = sprintf('api:%s', Auth::user()->api_key);
 
-<section>
-	<h2>Validation</h2>
-	<pre>
-<code contenteditable data-trim class="php">
+	// Create the key if it doesn't exist
+	Cache::add($key, 0, 60);
 
-$validator = Validator::make( $data, Contact::$rules );
+	// Increment by 1
+	$count = Cache::increment($key);
+
+	// Fail if hourly requests exceeded
+	if ($count > Config::get('api.requests_per_hour'))
+	{
+		App::abort(403, 'Hourly request limit exceeded');
+	}
+});
 
 </code>
-	</pre>
-	<pre class="fragment">
-<code contenteditable data-trim class="php" data-filename="app/models/Contact.php">
-	
-	public static $rules = array(...);
-
-</code>
+	</pre>	
 </section>
-
-<section>
-	<h2>Validation Rules</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-$data = array(
-	'contact' => 'Benjamin Gonzalez',
-	'email'  => 'benjamin.rosell@gmail.com',
-));
-
-$rules = array(
-	'contact'        => 'required|min:5',
-	'email'          => 'required|email'
-);
-</code>
-	</pre>
-</section>
-
-
-<section>
-	<h2>Validation Rules</h2>
-	<pre>
-<code contenteditable data-trim class="php">
-$rules = array(
-	'firstname'  => 'required',
-	'lastname'   => 'alpha',
-	'email'      => 'email',
-	'age'        => 'integer|between:18,65',
-	'agree'      => array('required','accepted'),
-	'website'    => 'url',
-	'password'   => 'confirmed',              // implies matching 'password_confirmation' data
-	'company_id' => 'exists:companies,id',
-	'gender'     => 'in:male,female',
-	'photo'      => 'mimes:jpeg,png|max:100', // kilobytes
-	'postalcode' => 'regex:^[A-Z][0-9][A-Z] ?[0-9][A-Z][0-9]$'
-);
-</code>
-	</pre>
-</section>
-
-<section class="full-height" data-background="../img/logging1.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Logging && Clockwork</h2>
-</section>
-
-
-<section class="full-height" data-background="../img/caching1.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Caching</h2>
-</section>
-
-
-<section class="full-height" data-background="../img/mail1.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Mail</h2>
-</section>
-
-<section class="full-height" data-background="../img/queues.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Queues</h2>
-</section>
-
-<section data-background="../img/other-features.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar fragment consecutive">Authentication</h2>
-	<h2 class="bar fragment consecutive">Events</h2>
-	<h2 class="bar fragment consecutive">Localization</h2>
-	<h2 class="bar fragment consecutive">Packages</h2>
-</section>
-
-<section class="full-height" data-background="../img/blacksmith-s-forge.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Laravel Forge</h2>
-</section>
-
-<section>
-	<h2>Instant PHP platforms on the cloud</h2>
-	<ul>
-		<li class="fragment">
-			Works with:
-			<ul class="caret">
-				<li>Linode </li>
-				<li>Digital Ocean</li>
-				<li>AWS</li>
-				<li>Rackspace</li>
-			</ul>
-		</li>
-		<li class="fragment">
-			Super simple to set up :
-			<ul class="caret">
-				<li>Create an account </li>
-				<li>Add Api keys </li>
-				<li>Deploy ! </li>
-			</ul>
-		</li>
-	</ul>
-</section>
-
-<section>
-	<h2>Laravel Forge</h2>
-	<ul>
-		<li class="fragment">
-			Main features : 
-			<ul class="caret">
-				<li class="fragment">Same setup as Laravel Homestead
-					<em class="aside">
-						same local and remote environment
-					</em>
-				</li>
-				<li class="fragment">Push to deploy
-					<em class="aside">
-						<a href="//github.com"><i class="fa fa-cloud-upload"></i> Github</a> or
-						<a href="//bitbucket.com"><i class="fa fa-cloud-upload"></i> Bitbucket</a>
-					</em>
-				</li>
-				<li class="fragment">Does not depend on Laravel ...
-					<em class="aside">
-						Tuned for Laravel, framework agnostic
-					</em>
-				</li>
-				<li class="fragment">Unlimited servers, domains, subdomains, etc...
-				</li>
-			</ul>
-		</li>
-	</ul>
-</section>
-
 
 
 <section class="shaded bg-inverse" data-background="../img/books1.jpg" data-background-transition="fade" data-transition="linear">
@@ -1173,8 +914,8 @@ $rules = array(
 			</div>
 		</div>
 
-		<script src="..lib/js/head.min.js"></script>
-		<script src="..js/reveal.min.js"></script>
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
 		<script>
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration

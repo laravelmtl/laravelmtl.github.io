@@ -21,6 +21,10 @@ html * {
 .mauve {
   background-color: #706da7; }
 
+.reveal blockquote {
+  line-height: 40px !important;
+  border: none; }
+
 /*********************************************
  * GLOBAL STYLES
  *********************************************/

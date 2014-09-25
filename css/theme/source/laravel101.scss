@@ -48,6 +48,11 @@ $pen:					#457;
 	background-color: $mauve;
 }
 
+.reveal blockquote {
+	line-height: 40px !important;
+	border: none;
+}
+
 
 // Override theme settings (see ../template/settings.scss)
 
