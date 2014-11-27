@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Laravel 101</title>
+
+		<meta name="description" content="An introduction to the Laravel framework, for the Winnipeg PHP Meetup group">
+		<meta name="author" content="Benjamin Gonzalez">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/laravel101.min.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = '../text/css';
+				link.href = '../css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="..lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+
+<section data-background="../img/background.jpg" data-background-transition="zoom" class="bg-inverse" data-transition="fade">
+	<h1>Speed up with Queues</h1>
+	<p>
+		Laravel Montréal #4 - November 27th, 2014
+	</p>
+</section>
+
+
+<section data-background="../img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
+	<h1>Before we start ...</h1>
+	<p class="fragment">
+		Thanks for comming !
+	</p>
+	<p class="fragment">
+		Sponsors
+	</p>
+	<p class="fragment">
+		Jobs
+	</p>
+	<p class="fragment">
+		Get involved
+	</p>
+</section>
+
+	
+<section class="full-height" data-background="../img/queues.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Queues</h2>
+</section>
+
+
+<section>
+	<h2>What is the idea behind a queue?</h2>
+	<blockquote>Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time, thus drastically speeding up the web requests to your application.</blockquote>
+</section>
+
+<section class="full-height" data-background="../img/buzzer.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">It's like a restaurant's buzzer</h2>
+</section>
+
+<section>
+	<h2>About Queues</h2>
+
+	<ul>
+		<li class="fragment roll-in">Unlike JavaScript, PHP is a blocking language</li>
+		<li class="fragment roll-in">PHP must complete each line of code before it goes on the other
+			<em class="aside">
+ 				Using any concept like a "promise" has not being an option
+			</em>
+		</li>
+		<li class="fragment roll-in">Therefore, a use must wait...
+			<em class="aside">
+ 				All business logic must normally be completed before some feedback is sent to the user
+			</em>
+		</li>
+		<li class="fragment roll-in">Unless, you take avantage of queues !</li>
+	</ul>
+</section>
+
+<section>
+	<h2>The process of queueing</h2>
+
+	<p class=" fragment roll-in">Think of a queue as a to do list</p>
+	<ol>
+		<li class="fragment roll-in">You encounter a time-consuming task 
+		</li>
+		<li class="fragment roll-in">Rather than executing the job inmmediatly, you send it to a todo list
+			<em class="aside">
+				This is called "pushing" a job to the queue
+			</em>
+		</li>
+		<li class="fragment roll-in">Now that the todo list is populated, someone needs to execute the jobs</li>
+		<li class="fragment roll-in">An instance of your application, called a "worker" is always ready to receive new jobs </li>
+		<li class="fragment roll-in">When a new job is available, the worker executes it </li>
+	</ol>
+</section>
+
+
+<section class="full-height" data-background="../img/worker.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">See it in action</h2>
+</section>
+
+<section>
+	<h2>Laravel makes it amazingly easy...</h2>
+	<p>It offers 4 different drivers, one simple API</p>
+
+	<ul>
+		<li class="fragment roll-in">Iron MQ
+			<em class="aside">
+				<a href="http://www.iron.io/"><i class="fa fa-cloud-download"></i> Iron.io account</a> and <a href="http://www.iron.io/"><i class="fa fa-cloud-download"></i>iron-io/iron_mq</a> to composer.json
+			</em>
+		</li>
+		<li class="fragment roll-in">Amazon SQS
+			<em class="aside">
+				<a href="http://aws.amazon.com/sqs/"><i class="fa fa-cloud-download"></i> Amazon account</a> and <a href="http://aws.amazon.com/sqs/"><i class="fa fa-cloud-download"></i> aws/aws-sdk-php</a> to composer.json 
+			</em>
+		</li>
+		<li class="fragment roll-in">Beanstalk
+			<em class="aside">
+				Install <a href="http://kr.github.io/beanstalkd/"><i class="fa fa-cloud-download"></i> beanstalkd</a> and add <a href="https://github.com/pda/pheanstalk"><i class="fa fa-cloud-download"></i>pda/pheanstalk ~2.0</a> to composer.json
+			</em>
+		</li>
+		<li class="fragment roll-in">Redis
+			<em class="aside">
+				Install <a href="http://redis.io/"><i class="fa fa-cloud-download"></i> Redis</a> on your server
+			</em>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2>Simple command line tools</h2>
+	<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:listen
+</code>
+		</pre>
+		</pre>
+	</div>
+	<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:listen --timeout=60
+</code>	
+		</pre>
+		</pre>
+	</div>
+<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:listen --timeout=60 --tries=3
+</code>
+		</pre>
+		</pre>
+	</div>
+	<aside class="notes">
+<i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
+<i class="fa fa-fw fa-compass"></i> 
+	</aside>
+</section>
+
+
+<section class="full-height" data-background="http://kn.pta.hu/wp-content/uploads/2014/10/smash.jpeg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">What about failed jobs ?</h2>
+</section>
+
+<section>
+	<h2>Failed jobs</h2>
+	<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:failed-table
+</code>
+		</pre>
+		</pre>
+	</div>
+	<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:failed
+</code>
+		</pre>
+		</pre>
+	</div>
+	<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:retry 1
+</code>	
+		</pre>
+		</pre>
+	</div>
+<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:forget 1
+</code>	
+		</pre>
+		</pre>
+	</div>
+<div class="fragment-block">
+		<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:flush
+</code>
+		</pre>
+		</pre>
+	</div>
+	<aside class="notes">
+<i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
+<i class="fa fa-fw fa-compass"></i> 
+	</aside>
+</section>
+
+
+<section class="full-height" data-background="http://www.brasilpostos.com.br/wp-content/uploads/2014/10/05.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Supervisor</h2>
+</section>
+
+
+<section>
+	<h2>Installing</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+# Debian / Ubuntu:
+# already installed in homestead
+
+$ sudo apt-get install supervisor
+</code>
+	</pre>
+</section>
+
+<section>
+	<h2>Configure</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+# Debian / Ubuntu:
+# already installed in homestead
+
+$ sudo nano /etc/supervisor/conf.d/myqueue.conf
+</code>
+	</pre>
+
+	<pre>
+<code contenteditable data-trim class="bash" data-filename="/etc/supervisor/conf.d/myqueue.conf">
+[program:myqueue]
+command=php artisan queue:listen --tries=3
+directory=/home/vagrant/Code/queue
+stdout_logfile=/home/vagrant/Code/queue/app/storage/logs/myqueue_supervisord.log
+redirect_stderr=true
+autostart=true
+autorestart=true
+</code>
+	</pre>
+</section>
+
+<section>
+	<h2>Boot !</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+$ sudo supervisorctl
+> reread # Tell supervisord to check for new items in /etc/supervisor/conf.d/
+> add myqueue       # Add this process to Supervisord
+> start myqueue     # May say "already started"
+</code>
+	</pre>
+</section>
+
+
+<section class="full-height" data-background="http://media.giphy.com/media/EKM4q94OUju5G/giphy.gif" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Push Queues</h2>
+</section>
+
+<section>
+	<h2>Simple, no architechture needed</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+php artisan queue:subscribe queue_name http://queue.app/queue/receive
+</code>
+	</pre>	
+
+	<pre>
+<code contenteditable data-trim class="php" data-filename="app/routes.php">
+Route::post('queue/receive', function()
+{
+    return Queue::marshal();
+});
+</code>
+	</pre>	
+</section>
+
+
+<section class="shaded bg-inverse" data-background="../img/books1.jpg" data-background-transition="fade" data-transition="linear">
+	<h2>Further Reading</h2>
+	<ul class="no-bullet">
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-book"></i>
+			<a href="//laravel.com/docs/4.2/queues">laravel.com/docs/4.2/queues</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-cogs"></i>
+			<a href="//fideloper.com/ubuntu-beanstalkd-and-laravel4">Production ready queues by Fideloper</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-cogs"></i>
+			<a href="http://blog.iron.io/2013/05/laravel-4-ironmq-push-queues-insane.html">Push Queues with Iron.io</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-youtube-play"></i>
+			<a href="//laracasts.com">laracasts.com</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
+			<a href="//github.com/benjaminrosell">github.com/BenjaminRosell</a>
+		</li>
+	</ul>
+</section>
+
+
+<section class="full-height" data-background="../img/thats-all-folks.png" data-background-transition="fade" data-transition="zoom">
+	<h1 class="thats-all fragment spin-in">That&rsquo;s All Folks!</h1>
+</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+		<script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				width: 1440,
+				height: 1000,
+				margin: 0.15,
+
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.pack.js', async: true, callback: function() {
+						hljs.configure({ tabReplace: '  ' });
+						hljs.initHighlightingOnLoad();
+					} },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-52956521-1', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+	</body>
+</html>
