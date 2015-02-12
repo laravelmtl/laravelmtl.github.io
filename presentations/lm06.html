@@ -97,258 +97,278 @@
 	</ul>
 </section>
 
+
+<section class="full-height" data-background="../img/vader.gif" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">I find your lack of tests disturbing </h2>
+</section>
+
+<section>
+	<h2>Robert Martin</h2>
+	<p class=" fragment roll-in">"It has become infeasible for a software developer to consider himself professional if he does not practice <a href="https://www.youtube.com/watch?feature=player_detailpage&v=KtHQGs3zFAM#t=77s">test-driven development.</a></p>
+</section>
+
+<section>
+	<h2>David Heinemeier Hansson</h2>
+	<p class=" fragment roll-in">"Don’t force yourself to test-first every controller, model, and view (my ratio is typically 20% test-first, 80% test-after)."</p>
+</section>
+
 <section class="full-height" data-background="../img/messy-room-02.jpg" data-background-transition="slide" data-transition="linear">
 	<h2 class="bar">Where to begin ? </h2>
 </section>
 
-<section>
-	<h2>About Queues</h2>
-
-	<ul>
-		<li class="fragment roll-in">Unlike JavaScript, PHP is a blocking language</li>
-		<li class="fragment roll-in">PHP must complete each line of code before it goes on the other
-			<em class="aside">
- 				Using any concept like a "promise" has not being an option
-			</em>
-		</li>
-		<li class="fragment roll-in">Therefore, a use must wait...
-			<em class="aside">
- 				All business logic must normally be completed before some feedback is sent to the user
-			</em>
-		</li>
-		<li class="fragment roll-in">Unless, you take avantage of queues !</li>
-	</ul>
-</section>
-
-
-
-<section class="full-height" data-background="../img/worker.jpg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">See it in action</h2>
+<section class="full-height" data-background="../img/spell.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">A bit of vocabulary </h2>
 </section>
 
 <section>
-	<h2>Laravel makes it amazingly easy...</h2>
-	<p>It offers 4 different drivers, one simple API</p>
+	<h2>A Unit Test</h2>
+	<p>A very simple test of an isolated piece of functionality.
+</p>
+ 	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="test.php">
+class Greeter {
 
-	<ul>
-		<li class="fragment roll-in">Iron MQ
-			<em class="aside">
-				<a href="http://www.iron.io/"><i class="fa fa-cloud-download"></i> Iron.io account</a> and <a href="http://www.iron.io/"><i class="fa fa-cloud-download"></i>iron-io/iron_mq</a> to composer.json
-			</em>
-		</li>
-		<li class="fragment roll-in">Amazon SQS
-			<em class="aside">
-				<a href="http://aws.amazon.com/sqs/"><i class="fa fa-cloud-download"></i> Amazon account</a> and <a href="http://aws.amazon.com/sqs/"><i class="fa fa-cloud-download"></i> aws/aws-sdk-php</a> to composer.json 
-			</em>
-		</li>
-		<li class="fragment roll-in">Beanstalk
-			<em class="aside">
-				Install <a href="http://kr.github.io/beanstalkd/"><i class="fa fa-cloud-download"></i> beanstalkd</a> and add <a href="https://github.com/pda/pheanstalk"><i class="fa fa-cloud-download"></i>pda/pheanstalk ~2.0</a> to composer.json
-			</em>
-		</li>
-		<li class="fragment roll-in">Redis
-			<em class="aside">
-				Install <a href="http://redis.io/"><i class="fa fa-cloud-download"></i> Redis</a> on your server
-			</em>
-		</li>
-	</ul>
-</section>
+    public function greet($tags)
+    {
+        echo "Hello, World.";
+    }
 
-<section>
-	<h2>Simple command line tools</h2>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:listen
+}
 </code>
-		</pre>
-		</pre>
-	</div>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:listen --timeout=60
-</code>	
-		</pre>
-		</pre>
-	</div>
-<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:listen --timeout=60 --tries=3
+	</pre>	 
+
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="test.php">
+class PracticeTest extends PHPUnit_Framework_TestCase {
+
+	public function testGreeterGreetsHelloWorld()
+	{
+		$greeter = new Greeter;
+		$this->assertTrue($greeter->greet() === 'Hello, World.');
+	}
+}
 </code>
-		</pre>
-		</pre>
-	</div>
+	</pre>
 	<aside class="notes">
 <i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
-<i class="fa fa-fw fa-compass"></i> 
+<i class="fa fa-fw fa-compass"></i> Example, testing a method… No calls to the DB, no calls to other functions, isolate the very unit you are trying to test… What happens when I run a method, with a specific input. Normally we test only one thing, and one thing alone… 80% of your tests will be in this style.
+	</aside>
+</section>
+
+<section>
+	<h2>A Mock</h2>
+	<p>An objects that allows you to simulate behaviour of another object.</p>
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="GeneratorTest.php">
+Class Generator {
+	public function __construct(File $file) 
+	{
+		$this->file = $file;
+	}
+
+	public function fire() 
+	{
+		$this->file->put('foo.txt', 'Something here...');
+	}
+}
+
+</code>
+	</pre>
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="GeneratorTest.php">
+public function testGeneratesFile() {
+    $mockedFile = Mockery::mock('File');
+    
+    $mockedFile->shouldReceive('exists')
+               ->once()
+			   ->andReturn(true); 
+		
+	$generator = new Generator($mockedFile);
+    $generator->fire();
+}
+
+</code>
+	</pre>
+	<aside class="notes">
+<i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
+<i class="fa fa-fw fa-compass"></i>
 	</aside>
 </section>
 
 
-<section class="full-height" data-background="http://kn.pta.hu/wp-content/uploads/2014/10/smash.jpeg" data-background-transition="slide" data-transition="linear">
-	<h2 class="bar">What about failed jobs ?</h2>
-</section>
-
 <section>
-	<h2>Failed jobs</h2>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:failed-table
+	<h2>A Stub</h2>
+	<p>An objects with a very specific set of data</p>
+	</pre>
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="GeneratorTest.php">
+public function testRegistrationEmailsUser() {
+    $fakeUser = new User();
+    $fakeUser->fill(['name' => 'Benjamin Gonzalez', 'email' => 'benjamin.rosell@gmail.com']);
+	
+	$mockedMailer = Mockery::mock('File');
+    $mockedMailer->shouldReceive('exists')
+               ->once()
+			   ->andReturn(true); 
+
+	$generator = new Mailer($user, );
+    $generator->fire();
+}
+
 </code>
-		</pre>
-		</pre>
-	</div>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:failed
-</code>
-		</pre>
-		</pre>
-	</div>
-	<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:retry 1
-</code>	
-		</pre>
-		</pre>
-	</div>
-<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:forget 1
-</code>	
-		</pre>
-		</pre>
-	</div>
-<div class="fragment-block">
-		<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:flush
-</code>
-		</pre>
-		</pre>
-	</div>
+	</pre>
 	<aside class="notes">
 <i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
-<i class="fa fa-fw fa-compass"></i> 
+<i class="fa fa-fw fa-compass"></i>
 	</aside>
 </section>
 
 
-<section class="full-height" data-background="http://www.brasilpostos.com.br/wp-content/uploads/2014/10/05.jpg" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Supervisor</h2>
+<section>
+	<h2>Integration testing</h2>
+	<p>If a unit test verifies that code works correctly in isolation, then an integration test will fall on the other end of the spectrum. These tests will flex multiple parts of your application, and typically won’t rely on mocks or stubs.</p>
+	<aside class="notes">
+<i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
+<i class="fa fa-fw fa-compass"></i>
+	</aside>
+</section>
+
+<section>
+	<h2>Acceptance testing</h2>
+	<p>Does this code meet the requirements of the client? Your software can pass all unit, functional, and integration tests, but still fail the acceptance tests, if the client or customer realizes that the feature doesn’t work as they expected.</p>
+	<aside class="notes">
+<i class="fa fa-fw fa-terminal"></i> git checkout v2.1<br>
+<i class="fa fa-fw fa-compass"></i>
+	</aside>
+</section>
+
+
+<section class="full-height" data-background="../img/pitfall.gif" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Pitfalls</h2>
 </section>
 
 
 <section>
-	<h2>Installing</h2>
-	<pre>
-<code contenteditable data-trim class="bash">
-# Debian / Ubuntu:
-# already installed in homestead
+	<h2>Common mistakes in TDD</h2>
 
-$ sudo apt-get install supervisor
-</code>
-	</pre>
+	<ul>
+		<li class="fragment roll-in">Not knowing what to test... </li>
+		<li class="fragment roll-in">Not being carefull when naming your tests </li>
+		<li class="fragment roll-in">Not using test doubles (stubs and mocks)</li>
+		<li class="fragment roll-in">Micro-design over macro-design</li>
+		<li class="fragment roll-in">Not using your tests at all</li>
+		<li class="fragment roll-in">Focusing too much on code coverage</li>
+		<li class="fragment roll-in">Not emphazising acceptance tests</li>
+		<li class="fragment roll-in">False greens</li>
+	</ul>
+</section>
+
+<section data-background="../img/background.jpg" data-background-transition="zoom" class="bg-inverse" data-transition="fade">
+	<h1>TDD in Laravel</h1>
 </section>
 
 <section>
-	<h2>Configure</h2>
-	<pre>
-<code contenteditable data-trim class="bash">
-# Debian / Ubuntu:
-# already installed in homestead
+	<h2>PHPUnit</h2>
 
-$ sudo nano /etc/supervisor/conf.d/myqueue.conf
-</code>
-	</pre>
-
-	<pre>
-<code contenteditable data-trim class="bash" data-filename="/etc/supervisor/conf.d/myqueue.conf">
-[program:myqueue]
-command=php artisan queue:listen --tries=3
-directory=/home/vagrant/Code/queue
-stdout_logfile=/home/vagrant/Code/queue/app/storage/logs/myqueue_supervisord.log
-redirect_stderr=true
-autostart=true
-autorestart=true
+	<pre class="fragment">
+<code contenteditable data-trim class="xml" data-filename="phpunit.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="bootstrap/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+>
+    <testsuites>
+        <testsuite name="Application Test Suite">
+            <directory>./app/tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
 </code>
 	</pre>
 </section>
+
 
 <section>
-	<h2>Boot !</h2>
-	<pre>
-<code contenteditable data-trim class="bash">
-$ sudo supervisorctl
-> reread # Tell supervisord to check for new items in /etc/supervisor/conf.d/
-> add myqueue       # Add this process to Supervisord
-> start myqueue     # May say "already started"
-</code>
-	</pre>
-</section>
-
-
-<section class="full-height" data-background="http://media.giphy.com/media/EKM4q94OUju5G/giphy.gif" data-background-transition="fade" data-transition="linear">
-	<h2 class="bar">Push Queues</h2>
-</section>
-
-<section>
-	<h2>Simple, no architechture needed</h2>
-	<pre>
-<code contenteditable data-trim class="bash">
-php artisan queue:subscribe queue_name http://queue.app/queue/receive
-</code>
-	</pre>	
-
-	<pre>
-<code contenteditable data-trim class="php" data-filename="app/routes.php">
-Route::post('queue/receive', function()
-{
-    return Queue::marshal();
-});
-</code>
-	</pre>	
-</section>
-
-
-<section class="shaded bg-inverse" data-background="../img/books1.jpg" data-background-transition="fade" data-transition="linear">
-	<h2>Further Reading</h2>
-	<ul class="no-bullet">
-		<li class="fragment">
-			<i class="fa fa-fw fa-lg fa-faded fa-book"></i>
-			<a href="//laravel.com/docs/4.2/queues">laravel.com/docs/4.2/queues</a>
-		</li>
-		<li class="fragment">
-			<i class="fa fa-fw fa-lg fa-faded fa-cogs"></i>
-			<a href="//fideloper.com/ubuntu-beanstalkd-and-laravel4">Production ready queues by Fideloper</a>
-		</li>
-		<li class="fragment">
-			<i class="fa fa-fw fa-lg fa-faded fa-cogs"></i>
-			<a href="http://blog.iron.io/2013/05/laravel-4-ironmq-push-queues-insane.html">Push Queues with Iron.io</a>
-		</li>
-		<li class="fragment">
-			<i class="fa fa-fw fa-lg fa-faded fa-youtube-play"></i>
-			<a href="//laracasts.com">laracasts.com</a>
-		</li>
-		<li class="fragment">
-			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
-			<a href="//github.com/benjaminrosell">github.com/BenjaminRosell</a>
+	<h2>Application Folders</h2>
+	<ul class="folders">
+		<li>app
+			<ul>
+				<li>commands</li>
+				<li>config</li>
+				<li>controllers</li>
+				<li>database</li>
+				<li>lang</li>
+				<li>models</li>
+				<li>start</li>
+				<li>storage</li>
+				<li class="fragment highlight-blue" data-fragment-index="1">tests</li>
+				<li>views</li>
+				<li class="file">filters.php</li>
+				<li class="file">routes.php</li>
+			</ul>
 		</li>
 	</ul>
 </section>
 
+<section>
+	<h2>PHPUnit</h2>
 
-<section class="full-height" data-background="../img/thats-all-folks.png" data-background-transition="fade" data-transition="zoom">
-	<h1 class="thats-all fragment spin-in">That&rsquo;s All Folks!</h1>
+	<pre class="fragment">
+<code contenteditable data-trim class="php" data-filename="FooTest.php">
+class FooTest extends TestCase {
+
+    public function testSomethingIsTrue()
+    {
+        $this->assertTrue(true);
+    }
+
+}
+</phpunit>
+</code>
+	</pre>
 </section>
 
 
+<section>
+	<h2>TDD Kata</h2>
+	<p>Create a simple String calculator with a method int Add(string numbers). The method can take 0, 1 or 2 numbers, and will return their sum (for an empty string it will return 0). For example "" or "1" or "1,2"</p>
+	<p class="fragment">Start with the simplest test case of an empty string and move to 1 and two numbers</p>
+	<p class="fragment">Remember to solve things as simply as possible so that you force yourself to write tests you did not think about</p>
+	<p class="fragment">Remember to refactor after each passing test</p>
+</section>
+
+
+<section>
+	<h2>TDD Kata</h2>
+	<p>Allow the Add method to handle an unknown amount of numbers</p>
+</section>
+
+<section>
+	<h2>TDD Kata</h2>
+	<p>Allow the Add method to handle new lines between numbers (instead of commas).</p>
+	<p>the following input is ok: "1\n2,3" (will equal 6)</p>
+	<p>the following input is NOT ok: "1,\n" (not need to prove it - just clarifying)</p>
+</section>
+
+<section>
+	<h2>TDD Kata</h2>
+	<p>Support different delimiters. To change a delimiter, the beginning of the string will contain a separate line that looks like this: [delimiter]\n[numbers...], </p>
+	<p>for example ;\n1;2 should return three where the default delimiter is ; .</p>
+	<p>he first line is optional. all existing scenarios should still be supported</p>
+</section>
+
+<section>
+	<h2>TDD Kata</h2>
+	<p>Calling Add with a negative number will throw an exception "negatives not allowed" - and the negative that was passed.
+if there are multiple negatives, show all of them in the exception message/p>
+</section>
 
 			</div>
 		</div>
