@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Laravel 101</title>
+
+		<meta name="description" content="An introduction to the Laravel framework, for the Laravel Montreal Meetup group">
+		<meta name="author" content="Benjamin Gonzalez">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/laravel101.min.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = '../text/css';
+				link.href = '../css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="..lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+
+<section data-background="../img/background.jpg" data-background-transition="zoom" class="bg-inverse" data-transition="fade">
+	<h1>Discovering Laravel 5</h1>
+	<p>
+		Laravel Montréal #6 - February 12th, 2015
+	</p>
+</section>
+
+
+<section data-background="../img/background.jpg" data-background-transition="slide" class="bg-inverse" data-transition="linear">
+	<h1>Before we start ...</h1>
+	<p class="fragment">
+		Thanks for comming !
+	</p>
+	<p class="fragment">
+		Sponsors
+	</p>
+	<p class="fragment">
+		Jobs
+	</p>
+	<p class="fragment">
+		Get involved
+	</p>
+</section>
+
+<section>
+	<h2>Benjamin Gonzalez</h2>
+	<ul>
+		<li class="fragment roll-in">Web Developer
+			<em class="aside">back-end and more recently front-end</em>
+		</li>
+		<li class="fragment roll-in">Involved in PHP since 2006
+			<em class="aside">with a few years off for good behaviour</em>
+		</li>
+		<li class="fragment roll-in">CTO for
+			<a href="//infoprimes.com">InfoPrimes</a>, founder of
+			<a href="//meetups.com/Laravel-Montreal">Laravel Montréal</a>
+			<em class="aside">we meet every month, you are welcome :)</em>
+		</li>
+		<li class="fragment roll-in">@BenjaminRosell at
+			<a href="//github.com/BenjaminRosell"> Github</a> and
+			<a href="//twitter.com/BenjaminRosell"> Twitter</a>
+			<span class="handwriting fragment">&hellip; also on <a href="//www.linkedin.com/pub/benjamin-gonzalez-rosell/1a/929/93"> LinkedIn</a></span>
+		</li>
+	</ul>
+</section>
+
+<section class="full-height" data-background="../img/homestead.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Homestead</h2>
+</section>
+
+<section class="full-height" data-background="../img/bob-ross.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Artisan</h2>
+</section>
+
+<section class="full-height" data-background="../img/blade1.png" data-background-transition="zoom" data-transition="linear">
+	<h2 class="bar">Blade Templating</h2>
+</section>
+
+<section class="full-height" data-background="../img/tape-drives.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Unified API for database access</h2>
+</section>
+
+<section class="full-height" data-background="../img/migration2.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Migrations</h2>
+</section>
+
+<section class="full-height" data-background="../img/models2.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Eloquent Models</h2>
+</section>
+
+<section class="full-height" data-background="../img/relationships.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Relationships</h2>
+</section>
+
+<section class="full-height" data-background="../img/caching1.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Caching</h2>
+</section>
+
+<section class="full-height" data-background="../img/queues.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Queues</h2>
+</section>
+
+<section class="full-height" data-background="../img/mail1.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Queueable Mailer Class</h2>
+</section>
+
+<section data-background="../img/other-features.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar fragment consecutive">Authentication</h2>
+	<h2 class="bar fragment consecutive">Events</h2>
+	<h2 class="bar fragment consecutive">Localization</h2>
+	<h2 class="bar fragment consecutive">Packages</h2>
+</section>
+
+	
+<section class="full-height" data-background="../img/hein2.gif" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">What ?</h2>
+</section>
+
+<section>
+	<h2>Prerequisites</h2>
+	<ul>
+		<li class="fragment roll-in">PHP >= 5.4</li>
+		<li class="fragment roll-in">Mcrypt extension</li>
+		<li class="fragment roll-in">OpenSSL extension</li>
+		<li class="fragment roll-in">Mbstring extension</li>
+		<li class="fragment roll-in">Tokenizer extension</li>
+		<li class="fragment roll-in">JSON extension</li>
+		</li>
+		<li class="fragment roll-in">Composer
+			<em class="aside">
+				<a href="//getcomposer.org"><i class="fa fa-cloud-download"></i> getcomposer.org</a>
+				and install it globally!
+			</em>
+		</li>
+		<li class="fragment roll-in">Don't worry too much
+			<em class="aside">
+				<a href="//php-osx.liip.ch/"><i class="fa fa-cloud-download"></i> PHP as binary package</a>
+				and relax...
+			</em>
+		</li>
+</section>
+
+<section class="full-height" data-background="../img/cabinet.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">New Project Structure</h2>
+</section>
+
+
+<section>
+	<h2>Project Folders</h2>
+	<ul class="folders">
+		<li>app
+			<span class="handwriting fragment inline padded highlight-active">&lt; your application's logic</span>
+		</li>
+		<li>bootstrap
+			<span class="handwriting fragment inline padded highlight-active">&lt;  startup stuff</span>
+		</li>
+		<li class="fragment highlight-blue" data-fragment-index="1">config
+			<span class="handwriting fragment inline padded highlight-active">&lt;  settings and config</span>
+		</li>
+		<li class="fragment highlight-blue" data-fragment-index="1">database
+			<span class="handwriting fragment inline padded highlight-active">&lt;  seeds and migrations</span>
+		</li>
+		<li class="fragment highlight-blue" data-fragment-index="1">resources
+			<span class="handwriting fragment inline padded highlight-active">&lt;  assets, language files and views</span>
+		</li>
+		<li class="fragment highlight-blue" data-fragment-index="1">storage
+			<span class="handwriting fragment inline padded highlight-active">&lt;  stuff generated by Laravel</span>
+		</li>
+		<li class="fragment highlight-blue" data-fragment-index="1">tests
+			<span class="handwriting fragment inline padded highlight-active">&lt; ...</span>
+		</li>
+		<li>public
+			<span class="handwriting fragment inline padded highlight-active">&lt; static stuff: img, js, css, etc.</span>
+		</li>
+		<li class="file">composer.json
+			<span class="handwriting fragment inline padded highlight-active">&lt; no changes here</span>
+		</li>
+		<li>vendor
+			<span class="handwriting fragment inline padded highlight-active">&lt; other people's stuff</span>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2>Project files</h2>
+	<ul class="folders">
+		<li class="file">.env
+			<span class="handwriting fragment inline padded highlight-active">&lt; all your environment settings</span>
+		</li>
+		<li class="file">gulpfile.js
+			<span class="handwriting fragment inline padded highlight-active">&lt; Laravel Elixir</span>
+		</li>
+		<li class="file">phpspec.yaml
+			<span class="handwriting fragment inline padded highlight-active">&lt; PhpSpec settings file </span>
+		</li>
+		<li class="file">phpunit.xml
+			<span class="handwriting fragment inline padded highlight-active">&lt; PHPUnit settings file</span>
+		</li>
+	</ul>
+</section>
+
+
+<section>
+	<h2>Application Folder</h2>
+	<ul class="folders">
+		<li>Commands
+			<span class="handwriting fragment inline padded highlight-active">&lt; the core of your application's logic</span>
+		</li>
+		<li>Console
+			<span class="handwriting fragment inline padded highlight-active">&lt; your artisans commands</span>
+		</li>
+		<li>Events
+			<span class="handwriting fragment inline padded highlight-active">&lt; applications events</span>
+		</li>
+		<li>Exceptions
+			<span class="handwriting fragment inline padded highlight-active">&lt; exception handlers</span>
+		</li>
+		<li>Handlers
+			<span class="handwriting fragment inline padded highlight-active">&lt; Command and event's handlers</span>
+		</li>
+		<li>Http
+			<span class="handwriting fragment inline padded highlight-active">&lt; Controllers, Middleare and Requests</span>
+		</li>
+		<li>Providers
+			<span class="handwriting fragment inline padded highlight-active">&lt; Service Providers</span>
+		</li>
+		<li>Services
+			<span class="handwriting fragment inline padded highlight-active">&lt; Other "helper" classes</span>
+		</li>
+	</ul>
+</section>
+
+<section data-background="#706da7" class="bg-inverse" data-transition="zoom">
+	<h2 class="no-border"><i class="fa fa-exclamation-triangle fa-lg fa-fw"></i> Controllers are namespaced !</h2>
+	<div class="handwriting fragment" style="left: 7em; top: 4em;">
+		<a href="http://www.php-fig.org/psr/psr-4/">PSR-4</a>, baby !
+	</div>
+</section>
+
+
+<section>
+	<h2>Application Folder</h2>
+	<ul class="terminal">
+		<li>make:command
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new command class</span>
+		</li>
+		<li>make:console
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new Artisan command</span>
+		</li>
+		<li>make:controller
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new resource controller class</span>
+		</li>
+		<li>make:event
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new event class</span>
+		</li>
+		<li>make:middleware
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new middleware class</span>
+		</li>
+		<li>make:migration
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new migration file</span>
+		</li>
+		<li>make:model
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new Eloquent model class</span>
+		</li>
+		<li>make:provider
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new service provider class</span>
+		</li>
+		<li>make:request
+			<span class="handwriting fragment inline padded highlight-active">&lt; Create a new form request class</span>
+		</li>
+		<li>event:generate
+			<span class="handwriting fragment inline padded highlight-active">&lt; Generate the missing events and handlers</span>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2>Starting a New Project</h2>
+	<pre>
+<code contenteditable data-trim class="bash">
+composer create-project laravel/laravel unicorn --prefer-dist
+</code>
+	</pre>
+	<pre class="fragment">
+<code contenteditable data-trim class="bash">
+php artisan app:name Unicorn
+</code>
+	</pre>
+	<div class="fragment wat skewed stamp-in" >
+		<img src="..//img/unicorn.jpg">
+	</div>
+	<aside class="notes">
+		<i class="fa fa-fw fa-terminal"></i> composer create-project laravel/laravel unicorn --prefer-dist <br>
+		<i class="fa fa-fw fa-terminal"></i> php artisan app:name Unicorn
+	</aside>
+</section>
+
+<section class="full-height" data-background="../img/routes.gif" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Routing updates</h2>
+	<aside class="notes">
+		<i class="fa fa-fw fa-terminal"></i> php artisan routes<br>
+	</aside>
+</section>
+
+<section class="full-height" data-background="../img/di.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Method Injection</h2>
+</section>
+
+<section>
+	<h2>Dependency Injection</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="App\Handlers\Commands.php">
+namespace App\Handlers\Commands;
+
+use Illuminate\Contracts\Mail\Mailer;
+
+class PurchasePodcastHandler {
+
+    protected $mailer;
+
+    public function __construct()
+    {
+        $this->mailer = new Mailer;
+    }
+
+}
+
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>Dependency Injection</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="App\Handlers\Commands">
+namespace App\Handlers\Commands;
+
+use Illuminate\Contracts\Mail\Mailer;
+
+class PurchasePodcastHandler {
+
+    protected $mailer;
+
+    public function __construct(Mailer $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+}
+
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>Dependency Injection</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="App\Handlers\Commands">
+namespace App\Handlers\Commands;
+
+use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Contracts\OtherClass;
+use Illuminate\Contracts\Validator;
+use Illuminate\Contracts\SomethingElse;
+
+class PurchasePodcastHandler {
+
+	[...]
+
+    public function __construct(Mailer $mailer, OtherClass $otherClass, Validator $validator, SomethingElse $somethingElse)
+    {
+        $this->mailer = $mailer;
+        $this->otherClass = $otherClass;
+        $this->validator = $validator;
+        $this->somethingElse = $somethingElse;
+    }
+
+}
+
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>Dependency Injection</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="App\Handlers\Commands">
+namespace App\Handlers\Commands;
+
+use Illuminate\Contracts\Mail\Mailer;
+
+class PurchasePodcastHandler {
+
+    protected $mailer;
+
+    public function __construct(Mailer $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+    public function handle(Validator $validator) {
+        $validator->run();
+    }
+
+}
+
+</code>
+	</pre>	
+</section>
+
+<section class="full-height" data-background="../img/forms2.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Form Requests</h2>
+	<aside class="notes">
+		<i class="fa fa-fw fa-terminal"></i> php artisan routes<br>
+	</aside>
+</section>
+
+<section>
+	<h2>Self Validating forms !</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="App\Http\Requests">
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Response;
+
+class FriendFormRequest extends FormRequest
+{
+    public function rules()
+    {
+        return [
+            'first_name' => 'required',
+            'email_address' => 'required|email'
+        ];
+    }
+
+</code>
+	</pre>	
+</section>
+
+<section>
+	<h2>Self Validating forms !</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="App\Http\Requests">
+php namespace App\Http\Controllers;
+
+use App\Http\Requests\FriendFormRequest;
+use Illuminate\Routing\Controller;
+use Response;
+
+class FriendsController extends Controller
+{
+    public function getAddFriend()
+    {
+        return view('friends.add');
+    }
+
+    public function postAddFriend(FriendFormRequest $request)
+    {
+        $this->command('addFriend', \Request::input());
+        return Response::make('Friend added!');
+    }
+}
+
+</code>
+	</pre>	
+</section>
+
+<section class="full-height" data-background="../img/schelduler.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Laravel Scheduler</h2>
+</section>
+
+<section>
+	<h2>Scheldule your artisans commands</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-filename="app/Console/Kernel.php">
+$schedule->command('cache:clear')
+     ->hourly()
+     ->sendOutputTo($filePath)
+     ->emailOutputTo('john@doe.com');
+
+$schedule->command('foo')->dailyAt('15:00');
+
+$schedule->command('foo')->thenPing($url);
+
+$schedule->command('foo')->cron('* * * * *');
+
+$schedule->call(function()
+{
+    // Do some task...
+
+})->hourly();
+</code>
+	</pre>	
+</section>
+
+<section class="full-height" data-background="../img/filesystem.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Filesystem and cloud storage</h2>
+	<aside class="notes">
+		<i class="fa fa-fw fa-terminal"></i> php artisan routes<br>
+	</aside>
+</section>
+
+<section>
+	<h2>Unified API for any filesystem</h2>
+	<pre>
+<code contenteditable data-trim class="php">
+	  	$contents = Storage::get('file.jpg');
+
+	Storage::put('file.jpg', $contents);
+
+	Storage::delete('file.jpg');
+
+	Storage::move('old/file1.jpg', 'new/file1.jpg');
+
+	Storage::copy('old/file1.jpg', 'new/file1.jpg');
+
+	$file = Storage::disk('s3')->get('file.jpg');
+</code>
+	</pre>	
+</section>
+
+<section class="full-height" data-background="../img/casting.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Eloquent Casting</h2>
+	<aside class="notes">
+		<i class="fa fa-fw fa-terminal"></i> php artisan routes<br>
+	</aside>
+</section>
+
+<section>
+	<h2>Cast strings into specific types</h2>
+	<pre>
+<code contenteditable data-trim class="php" data-file="Model.php">
+/**
+ * The attributes that should be casted to native types.
+ *
+ * @var array
+ */
+protected $casts = [
+    'is_admin' => 'boolean',
+    'friends' => 'array',
+    'somethingHere' => 'integer',
+    'somethingElse' => 'float',
+];
+</code>
+	</pre>	
+</section>
+
+<section class="shaded bg-inverse" data-background="../img/books1.jpg" data-background-transition="fade" data-transition="linear">
+	<h2>Further Reading</h2>
+	<ul class="no-bullet">
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-book"></i>
+			<a href="//laravel.com/docs">laravel.com/docs</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-cogs"></i>
+			<a href="//laravel.com/docs">laravel.com/api</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
+			<a href="//github.com/laravel">github.com/laravel</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-comments"></i>
+			<a href="//laravel.io">laravel.io</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-youtube-play"></i>
+			<a href="//laracasts.com">laracasts.com</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
+			<a href="//github.com/benjaminrosell">github.com/BenjaminRosell</a>
+		</li>
+	</ul>
+</section>
+
+<section class="full-height" data-background="../img/thats-all-folks.png" data-background-transition="fade" data-transition="zoom">
+	<h1 class="thats-all fragment spin-in">That&rsquo;s All Folks!</h1>
+</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+		<script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				width: 1440,
+				height: 1000,
+				margin: 0.15,
+
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.pack.js', async: true, callback: function() {
+						hljs.configure({ tabReplace: '  ' });
+						hljs.initHighlightingOnLoad();
+					} },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-52956521-1', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+	</body>
+</html>
