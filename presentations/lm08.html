@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Homestead, Forge, Envoyer</title>
+
+		<meta name="description" content="An introduction to the Laravel framework, for the Winnipeg PHP Meetup group">
+		<meta name="author" content="Benjamin Gonzalez">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="../css/reveal.min.css">
+		<link rel="stylesheet" href="../css/theme/laravel101.min.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = '../text/css';
+				link.href = '../css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+
+<section data-background="../img/background.jpg" data-background-transition="zoom" class="bg-inverse" data-transition="fade">
+	<h1>Homestead, Forge, Envoyer and deployments with Laravel</h1>
+	<p>
+		Laravel Montréal #? - June 18th, 2015
+	</p>
+</section>
+
+
+<section class="full-height" data-background="http://physicalmentalhealth.com/sites/default/files/istock_000012902027medium.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">The environment dilema</h2>
+</section>
+
+
+<section class="full-height" data-background="../img/homestead.jpg" data-background-transition="slide" data-transition="linear">
+	<h2 class="bar">Homestead</h2>
+</section>
+
+<section>
+	<h2>Software installed</h2>
+	<ul>
+		<li class="fragment roll-in">Ubuntu 14.04</li>
+		<li class="fragment roll-in">PHP 5.6</li>
+		<li class="fragment roll-in">HHVM</li>
+		<li class="fragment roll-in">Nginx</li>
+		<li class="fragment roll-in">MySQL</li>
+		<li class="fragment roll-in">Postgres</li>
+		<li class="fragment roll-in">Node (With Bower, Grunt, and Gulp)</li>
+		<li class="fragment roll-in">Redis</li>
+		<li class="fragment roll-in">Memcached</li>
+		<li class="fragment roll-in">Beanstalkd</li>
+		<li class="fragment roll-in">Laravel Envoy</li>
+		<li class="fragment roll-in">Fabric + HipChat Extension</li>
+	</ul>
+	<span class="handwriting fragment padded highlight-active">&lt; make sure you have <a href="http://www.vagrantup.com">vagrant</a> and <a href="http://www.virtualbox.com">virtualbox</a> installed</span>
+	<aside class="notes">
+		Homestead is a prepackaged vagrant box with all the tools that you need to fully benefit from laravel's protential.br <br>
+		In a simple process, you have a virtual machine that allows you to keep your machine clean from development scrap...		
+	</aside>
+</section>
+
+<section>
+	<h2>Installing homestead</h2>
+	<pre>
+<code contenteditable data-trim class="php">
+vagrant box add laravel/homestead
+</code>
+
+<code contenteditable data-trim class="bash">
+git clone https://github.com/laravel/homestead.git Homestead
+</code>
+</pre>
+</section>
+
+<section>
+	<h2>The config file</h2>
+	<pre>
+<code contenteditable data-trim class="yml" data-filename="homestead.yml">
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+
+authorize: /Users/benjamingonzalez/.ssh/id_rsa.pub
+
+keys:
+    - /Users/benjamingonzalez/.ssh/id_rsa
+
+folders:
+    - map: /Applications/MAMP/htdocs/contacts
+      to: /home/vagrant/code/contacts
+
+sites:
+    - map: contacts.app
+      to: /home/vagrant/code/contacts/public
+
+variables:
+    - key: APP_ENV
+      value: local
+</code>
+</pre>
+</section>
+
+<section class="full-height" data-background="../img/blacksmith-s-forge.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Laravel Forge</h2>
+</section>
+
+<section>
+	<h2>Instant PHP platforms on the cloud</h2>
+	<ul>
+		<li class="fragment">
+			Works with:
+			<ul class="caret">
+				<li>Linode </li>
+				<li>Digital Ocean</li>
+				<li>AWS</li>
+				<li>Rackspace</li>
+			</ul>
+		</li>
+		<li class="fragment">
+			Super simple to set up :
+			<ul class="caret">
+				<li>Create an account </li>
+				<li>Add Api keys </li>
+				<li>Deploy ! </li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section>
+	<h2>Laravel Forge</h2>
+	<ul>
+		<li class="fragment">
+			Main features : 
+			<ul class="caret">
+				<li class="fragment">Same setup as Laravel Homestead
+					<em class="aside">
+						same local and remote environment
+					</em>
+				</li>
+				<li class="fragment">Push to deploy
+					<em class="aside">
+						<a href="//github.com"><i class="fa fa-cloud-upload"></i> Github</a> or
+						<a href="//bitbucket.com"><i class="fa fa-cloud-upload"></i> Bitbucket</a>
+					</em>
+				</li>
+				<li class="fragment">Does not depend on Laravel ...
+					<em class="aside">
+						Tuned for Laravel, framework agnostic
+					</em>
+				</li>
+				<li class="fragment">Unlimited servers, domains, subdomains, etc...
+				</li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section class="full-height" data-background="https://upload.wikimedia.org/wikipedia/commons/c/c7/Space_Shuttle_Atlantis_launches_from_KSC_on_STS-132.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Laravel Envoyer</h2>
+</section>
+
+<section class="full-height" data-background="http://static.pratique.fr/images/unsized/ho/hook-revanche-capitaine-crochet.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Hooks</h2>
+</section>
+
+<section class="full-height" data-background="http://images.boomsbeat.com/data/images/full/768/10-jpg.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Zero downtime</h2>
+</section>
+
+<section class="full-height" data-background="http://1.bp.blogspot.com/-fmNjvYIsVew/UHXjNuYITTI/AAAAAAAAACg/ZprNlq-Yju8/s1600/emergency.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Hearbeats</h2>
+</section>
+
+
+<section class="full-height" data-background="http://www.studentsoftheworld.info/sites/country/img/48800_sherlock-holmes-movie-image-22.jpg" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">Scrutinizer</h2>
+</section>
+
+
+<section class="full-height" data-background="http://i.giphy.com/kZ31fHEKpAjXW.gif" data-background-transition="fade" data-transition="linear">
+	<h2 class="bar">PHPCI</h2>
+</section>
+
+
+
+<section class="shaded bg-inverse" data-background="../img/books1.jpg" data-background-transition="fade" data-transition="linear">
+	<h2>Further Reading</h2>
+	<ul class="no-bullet">
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-book"></i>
+			<a href="//laravel.com/docs">laravel.com/docs</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-cogs"></i>
+			<a href="//laravel.com/docs">laravel.com/api</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
+			<a href="//github.com/laravel">github.com/laravel</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-comments"></i>
+			<a href="//laravel.io">laravel.io</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-youtube-play"></i>
+			<a href="//laracasts.com">laracasts.com</a>
+		</li>
+		<li class="fragment">
+			<i class="fa fa-fw fa-lg fa-faded fa-github"></i>
+			<a href="//github.com/benjaminrosell">github.com/BenjaminRosell</a>
+		</li>
+	</ul>
+</section>
+
+
+<section class="full-height" data-background="../img/thats-all-folks.png" data-background-transition="fade" data-transition="zoom">
+	<h1 class="thats-all fragment spin-in">That&rsquo;s All Folks!</h1>
+</section>
+
+
+
+			</div>
+		</div>
+
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../js/reveal.min.js"></script>
+		<script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				width: 1440,
+				height: 1000,
+				margin: 0.15,
+
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../plugin/highlight/highlight.pack.js', async: true, callback: function() {
+						hljs.configure({ tabReplace: '  ' });
+						hljs.initHighlightingOnLoad();
+					} },
+					{ src: '../plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-52956521-1', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+	</body>
+</html>
